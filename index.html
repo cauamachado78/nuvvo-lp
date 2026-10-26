@@ -1,0 +1,1278 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head><script>if(location.pathname==="/mccea3v44ibvqwpropagxaaudu")location.replace("/mccea3v44ibvqwpropagxaaudu/"+location.search+location.hash)</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nuvvo - Controle financeiro para autônomos</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="shell.css">
+  <script src="shell.js"></script>
+  <style>
+    :root {
+      --accent: #287d3c;
+      --accent-text: #34a04d;
+      --accent-contrast: #ffffff;
+      --bg: #0d0d0d;
+      --surface: #1a1a1a;
+      --text: #ffffff;
+      --text-muted: #a0a0a0;
+      --border: #2a2a2a;
+      --danger: #d9534f;
+      --radius: 12px;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #0d0d0d;
+      color: #ffffff;
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .brand-logo {
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      font-size: 1.75rem;
+      color: #287d3c;
+      text-decoration: none;
+      line-height: 1;
+    }
+
+    .brand-green {
+      color: #287d3c;
+    }
+
+    .text-red {
+      color: #d9534f;
+    }
+
+    .muted {
+      color: #a0a0a0;
+    }
+
+    /* Headings */
+    .section-title {
+      font-size: 34px;
+      line-height: 1.15;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: #ffffff;
+      margin: 0;
+    }
+
+    @media (min-width: 768px) {
+      .section-title {
+        font-size: 56px;
+      }
+    }
+
+    /* Big CTA Button */
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 56px;
+      background-color: #287d3c;
+      color: #ffffff;
+      font-size: 1.05rem;
+      font-weight: 700;
+      padding: 0 1.5rem;
+      border-radius: 12px;
+      text-decoration: none;
+      border: 1px solid #287d3c;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(40, 125, 60, 0.35);
+      transition: box-shadow 0.2s ease, transform 0.15s ease, background-color 0.2s ease;
+      text-align: center;
+    }
+
+    .cta-btn:hover {
+      background-color: #2e8f45;
+      transform: translateY(-2px);
+      box-shadow: 0 0 24px rgba(40, 125, 60, 0.65);
+    }
+
+    @media (min-width: 640px) {
+      .cta-btn {
+        width: auto;
+        min-width: 340px;
+      }
+    }
+
+    /* Top Nav */
+    header.top-nav {
+      background: #0d0d0d;
+      border-bottom: 1px solid #2a2a2a;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .top-nav-btn {
+      background: #287d3c;
+      color: #ffffff;
+      font-weight: 600;
+      font-size: 0.88rem;
+      padding: 0.5rem 1rem;
+      border-radius: 12px;
+      text-decoration: none;
+      transition: box-shadow 0.2s;
+    }
+
+    .top-nav-btn:hover {
+      box-shadow: 0 0 14px rgba(40, 125, 60, 0.5);
+    }
+
+    /* Hero Glow & Layout */
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+      align-items: center;
+    }
+
+    @media (min-width: 992px) {
+      .hero-grid {
+        grid-template-columns: 1.15fr 0.85fr;
+        gap: 3.5rem;
+      }
+    }
+
+    .hero-phone-wrap {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-glow {
+      position: absolute;
+      width: 290px;
+      height: 380px;
+      background: radial-gradient(circle, rgba(40, 125, 60, 0.42) 0%, rgba(40, 125, 60, 0.08) 55%, transparent 75%);
+      filter: blur(36px);
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* Phone Mockup Frame */
+    .phone-mockup {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 320px;
+      background: #1a1a1a;
+      border: 2px solid #2a2a2a;
+      border-radius: 36px;
+      padding: 12px;
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.7);
+    }
+
+    .phone-speaker {
+      width: 52px;
+      height: 4px;
+      background: #2a2a2a;
+      border-radius: 4px;
+      margin: 2px auto 10px auto;
+    }
+
+    .phone-screen {
+      background: #0d0d0d;
+      border: 1px solid #2a2a2a;
+      border-radius: 26px;
+      padding: 12px 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    /* App UI inside phone */
+    .app-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 4px;
+    }
+
+    .app-logo {
+      font-weight: 800;
+      color: #287d3c;
+      font-size: 1.1rem;
+      letter-spacing: -0.04em;
+    }
+
+    .app-exit-btn {
+      background: #2a2a2a;
+      color: #a0a0a0;
+      font-size: 0.72rem;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-weight: 600;
+    }
+
+    .app-greeting {
+      font-size: 0.72rem;
+      color: #a0a0a0;
+      padding: 0 4px;
+      line-height: 1.3;
+    }
+
+    .app-card {
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 12px;
+      padding: 10px;
+    }
+
+    .app-live-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: rgba(40, 125, 60, 0.2);
+      color: #287d3c;
+      font-size: 0.65rem;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    .app-live-dot {
+      width: 5px;
+      height: 5px;
+      background: #287d3c;
+      border-radius: 50%;
+    }
+
+    .app-action-btn {
+      width: 100%;
+      height: 34px;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      cursor: default;
+    }
+
+    .app-btn-green {
+      background: #287d3c;
+    }
+
+    .app-btn-red {
+      background: #d9534f;
+    }
+
+    .app-btn-gray {
+      background: #2a2a2a;
+      color: #ffffff;
+    }
+
+    .app-launch-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 6px 4px;
+      font-size: 0.76rem;
+      border-bottom: 1px solid #1f1f1f;
+    }
+
+    .app-launch-row:last-child {
+      border-bottom: none;
+    }
+
+    .app-bottom-bar {
+      display: flex;
+      justify-content: space-around;
+      border-top: 1px solid #2a2a2a;
+      padding-top: 8px;
+      font-size: 0.7rem;
+      color: #a0a0a0;
+    }
+
+    .app-bottom-bar .active {
+      color: #287d3c;
+      font-weight: 700;
+    }
+
+    .phone-caption {
+      font-size: 0.75rem;
+      color: #a0a0a0;
+      margin-top: 8px;
+      text-align: center;
+    }
+
+    /* Pain cards */
+    .pain-card {
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 12px;
+      padding: 1.25rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+
+    .pain-icon {
+      flex-shrink: 0;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: rgba(217, 83, 79, 0.15);
+      color: #d9534f;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 1rem;
+    }
+
+    /* Demo Panel */
+    .demo-panel {
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 16px;
+      padding: 1.5rem;
+      max-width: 520px;
+      margin: 0 auto;
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.5);
+    }
+
+    .demo-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.8rem 0;
+      border-bottom: 1px solid #2a2a2a;
+      font-size: 1rem;
+    }
+
+    .demo-row:last-child {
+      border-bottom: none;
+    }
+
+    .demo-sobrou-box {
+      margin-top: 1.25rem;
+      padding: 1.25rem;
+      background: rgba(40, 125, 60, 0.12);
+      border: 1px solid #287d3c;
+      border-radius: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* Steps */
+    .step-card {
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 12px;
+      padding: 1.5rem;
+    }
+
+    .step-circle {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: #287d3c;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+    }
+
+    /* Price Card */
+    .price-card {
+      background: #1a1a1a;
+      border: 2px solid #287d3c;
+      border-radius: 16px;
+      padding: 2rem 1.5rem;
+      max-width: 500px;
+      margin: 0 auto;
+      box-shadow: 0 0 25px rgba(40, 125, 60, 0.2);
+    }
+
+    .price-list-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.85rem;
+      font-size: 1rem;
+      color: #ffffff;
+    }
+
+    .price-check {
+      color: #287d3c;
+      font-weight: 800;
+      font-size: 1.2rem;
+    }
+
+    /* FAQ */
+    .faq-card {
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 12px;
+      padding: 1.25rem;
+      margin-bottom: 0.85rem;
+    }
+
+    .faq-title {
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: #ffffff;
+      margin-bottom: 0.4rem;
+    }
+
+    footer.site-footer {
+      background: #1a1a1a;
+      border-top: 1px solid #2a2a2a;
+      padding: 2.5rem 1.25rem;
+      text-align: center;
+    }
+
+    footer.site-footer a {
+      color: #a0a0a0;
+      text-decoration: underline;
+      font-size: 0.9rem;
+    }
+
+    footer.site-footer a:hover {
+      color: #ffffff;
+    }
+
+    /* Popup / Modal de Cadastro */
+    dialog#modal-cadastro {
+      background: transparent;
+      border: none;
+      padding: 0;
+      margin: auto;
+      max-width: 480px;
+      width: calc(100vw - 32px);
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+      color: #ffffff;
+    }
+
+    dialog#modal-cadastro::backdrop {
+      background: rgba(0, 0, 0, 0.82);
+      backdrop-filter: blur(4px);
+    }
+
+    .modal-card {
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 16px;
+      padding: 1.75rem;
+      position: relative;
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.7);
+    }
+
+    .modal-close-btn {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: transparent;
+      border: none;
+      color: #a0a0a0;
+      font-size: 1.35rem;
+      cursor: pointer;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      transition: color 0.2s, background-color 0.2s;
+    }
+
+    .modal-close-btn:hover {
+      color: #ffffff;
+      background: #2a2a2a;
+    }
+
+    .modal-title {
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: #ffffff;
+      margin: 0 0 0.4rem 0;
+      padding-right: 2rem;
+      line-height: 1.25;
+    }
+
+    .modal-subtitle {
+      font-size: 0.92rem;
+      color: #a0a0a0;
+      margin: 0 0 1.5rem 0;
+      line-height: 1.45;
+    }
+
+    .modal-field {
+      margin-bottom: 1.15rem;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .modal-label {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #a0a0a0;
+      margin-bottom: 0.35rem;
+    }
+
+    .modal-input {
+      background: #0d0d0d;
+      border: 1px solid #2a2a2a;
+      border-radius: 10px;
+      color: #ffffff;
+      font-size: 0.95rem;
+      padding: 0.75rem 0.9rem;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      width: 100%;
+    }
+
+    .modal-input:focus {
+      border-color: #287d3c;
+      box-shadow: 0 0 0 2px rgba(40, 125, 60, 0.25);
+    }
+
+    .modal-input.input-error {
+      border-color: #d9534f;
+    }
+
+    .modal-error-msg {
+      color: #d9534f;
+      font-size: 0.78rem;
+      margin-top: 0.35rem;
+      display: none;
+      font-weight: 500;
+    }
+
+    .modal-error-msg.visible {
+      display: block;
+    }
+
+    .modal-submit-btn {
+      width: 100%;
+      height: 56px;
+      background: #287d3c;
+      color: #ffffff;
+      font-size: 1rem;
+      font-weight: 700;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      margin-top: 0.5rem;
+      transition: background-color 0.2s, box-shadow 0.2s, transform 0.15s;
+      font-family: inherit;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-submit-btn:hover {
+      background-color: #2e8f45;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 18px rgba(40, 125, 60, 0.45);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Topo / Barra de navegação -->
+  <header class="top-nav">
+    <div class="shell-container p-3 row between">
+      <a href="#" class="brand-logo" aria-label="nuvvo">nuvvo</a>
+      <a href="[LINK_CHECKOUT]" class="top-nav-btn">Assinar · R$ 9,99/mês</a>
+    </div>
+  </header>
+
+  <main>
+    <!-- 1. Topo (dobra) -->
+    <section class="shell-section" style="background: #0d0d0d; padding-top: 3rem; padding-bottom: 4rem;">
+      <div class="shell-container">
+        <div class="hero-grid">
+          <div>
+            <h1 class="section-title">
+              Você trabalha o mês inteiro. Sabe quanto <span class="brand-green">sobrou</span>?
+            </h1>
+            <p class="mt-4 mb-6 muted" style="font-size: 1.15rem; line-height: 1.55; max-width: 580px;">
+              Anote entradas e saídas do seu negócio em 5 segundos, no celular, e veja o que realmente ficou. Feito para motoristas de app, manicures, cabeleireiras, confeiteiras e autônomos.
+            </p>
+            <div>
+              <a href="[LINK_CHECKOUT]" class="cta-btn">
+                Quero organizar meu negócio · R$ 9,99/mês
+              </a>
+            </div>
+          </div>
+
+          <!-- Celular topo com glow verde -->
+          <div class="hero-phone-wrap">
+            <div class="hero-glow"></div>
+            <div class="phone-mockup">
+              <div class="phone-speaker"></div>
+              <div class="phone-screen">
+                <!-- Barra superior -->
+                <div class="app-topbar">
+                  <span class="app-logo">nuvvo</span>
+                  <span class="app-exit-btn">Sair</span>
+                </div>
+                <!-- Saudação -->
+                <div class="app-greeting">
+                  <div>Boa tarde</div>
+                  <strong style="color: #ffffff; font-size: 0.78rem;">Domingo, 25 de outubro</strong>
+                </div>
+                <!-- Card Principal -->
+                <div class="app-card">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                    <span style="font-size: 0.65rem; color: #a0a0a0; font-weight: 700; letter-spacing: 0.05em;">RESUMO DE HOJE</span>
+                    <span class="app-live-badge"><span class="app-live-dot"></span> Ao vivo</span>
+                  </div>
+                  <div style="font-size: 0.7rem; color: #a0a0a0;">Saldo do dia</div>
+                  <div style="font-size: 1.4rem; font-weight: 800; color: #ffffff; line-height: 1.2; margin-bottom: 8px;">R$ 1.700,00</div>
+                  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; border-top: 1px solid #2a2a2a; padding-top: 8px;">
+                    <div>
+                      <span style="font-size: 0.65rem; color: #a0a0a0; display: block;">Entradas</span>
+                      <strong style="font-size: 0.85rem; color: #ffffff;">R$ 3.500,00</strong>
+                    </div>
+                    <div>
+                      <span style="font-size: 0.65rem; color: #a0a0a0; display: block;">Despesas</span>
+                      <strong style="font-size: 0.85rem; color: #d9534f;">R$ 1.800,00</strong>
+                    </div>
+                  </div>
+                </div>
+                <!-- 3 Botões empilhados -->
+                <div style="display: flex; flex-direction: column; gap: 6px;">
+                  <button class="app-action-btn app-btn-green" type="button">+ Registrar entrada</button>
+                  <button class="app-action-btn app-btn-red" type="button">– Registrar despesa</button>
+                  <button class="app-action-btn app-btn-gray" type="button">Fechar caixa</button>
+                </div>
+                <!-- Últimos lançamentos -->
+                <div>
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; padding: 0 4px;">
+                    <span style="font-size: 0.72rem; font-weight: 700; color: #ffffff;">Últimos lançamentos</span>
+                    <span style="font-size: 0.68rem; color: #287d3c; font-weight: 600;">Ver todos</span>
+                  </div>
+                  <div class="app-card" style="padding: 4px 8px;">
+                    <div class="app-launch-row">
+                      <span style="color: #ffffff;">Cliente · Pix</span>
+                      <strong style="color: #287d3c;">+ R$ 120,00</strong>
+                    </div>
+                    <div class="app-launch-row">
+                      <span style="color: #ffffff;">Esmalte · Material</span>
+                      <strong style="color: #d9534f;">− R$ 45,00</strong>
+                    </div>
+                    <div class="app-launch-row">
+                      <span style="color: #ffffff;">Cliente · Cartão</span>
+                      <strong style="color: #287d3c;">+ R$ 80,00</strong>
+                    </div>
+                  </div>
+                </div>
+                <!-- Barra inferior -->
+                <div class="app-bottom-bar">
+                  <span class="active">● Início</span>
+                  <span>Movimentos</span>
+                  <span>Resumo</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. A dor -->
+    <section class="shell-section" style="background: #0d0d0d; border-top: 1px solid #2a2a2a; padding-top: 4rem; padding-bottom: 4rem;">
+      <div class="shell-container" style="max-width: 860px;">
+        <div class="text-center mb-6">
+          <h2 class="section-title" style="font-size: 30px;">
+            O problema não é ganhar pouco. É não saber para onde vai o <span class="brand-green">dinheiro</span>.
+          </h2>
+        </div>
+
+        <div class="shell-grid cols-2 gap-4">
+          <div class="pain-card">
+            <span class="pain-icon" aria-hidden="true">✕</span>
+            <p class="m-0" style="line-height: 1.45; font-size: 1rem; color: #ffffff;">
+              Entra Pix, dinheiro e cartão, e no fim do mês a conta não fecha.
+            </p>
+          </div>
+
+          <div class="pain-card">
+            <span class="pain-icon" aria-hidden="true">✕</span>
+            <p class="m-0" style="line-height: 1.45; font-size: 1rem; color: #ffffff;">
+              Material, combustível, aluguel e taxas se misturam com o dinheiro pessoal.
+            </p>
+          </div>
+
+          <div class="pain-card">
+            <span class="pain-icon" aria-hidden="true">✕</span>
+            <p class="m-0" style="line-height: 1.45; font-size: 1rem; color: #ffffff;">
+              Quando a renda cai, você não sabe se foi o mês ou se o negócio está perdendo dinheiro.
+            </p>
+          </div>
+
+          <div class="pain-card">
+            <span class="pain-icon" aria-hidden="true">✕</span>
+            <p class="m-0" style="line-height: 1.45; font-size: 1rem; color: #ffffff;">
+              Planilha dá trabalho, e a maioria desiste na segunda semana.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Demonstração com números (seção principal) -->
+    <section class="shell-section" style="background: #0d0d0d; border-top: 1px solid #2a2a2a; padding-top: 4rem; padding-bottom: 4rem;">
+      <div class="shell-container">
+        <div class="text-center mb-6">
+          <h2 class="section-title">
+            Veja como fica no seu <span class="brand-green">dia a dia</span>
+          </h2>
+          <p class="muted mt-2" style="font-size: 1.1rem;">Exemplo de uma manicure no mês.</p>
+        </div>
+
+        <div class="demo-panel">
+          <div class="demo-row">
+            <span style="color: #ffffff; font-weight: 600;">Entradas do mês</span>
+            <strong style="color: #ffffff; font-size: 1.15rem;">R$ 3.500</strong>
+          </div>
+          <div class="demo-row">
+            <span class="muted">Material</span>
+            <strong class="text-red">− R$ 620</strong>
+          </div>
+          <div class="demo-row">
+            <span class="muted">Combustível e transporte</span>
+            <strong class="text-red">− R$ 380</strong>
+          </div>
+          <div class="demo-row">
+            <span class="muted">Aluguel do espaço</span>
+            <strong class="text-red">− R$ 800</strong>
+          </div>
+
+          <div class="demo-sobrou-box">
+            <div>
+              <div style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; color: #a0a0a0; font-weight: 700;">Resultado</div>
+              <strong style="font-size: 1.4rem; color: #ffffff;">Sobrou</strong>
+            </div>
+            <strong style="font-size: 2.2rem; color: #287d3c; font-weight: 800; line-height: 1;">R$ 1.700</strong>
+          </div>
+        </div>
+
+        <div class="text-center mt-4">
+          <p style="font-size: 1.25rem; font-weight: 700; color: #ffffff; margin: 0;">
+            Num mês como esse, <span class="brand-green">R$ 1.700</span> ficaram no bolso.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. Veja o app por dentro -->
+    <section class="shell-section" style="background: #0d0d0d; border-top: 1px solid #2a2a2a; padding-top: 4rem; padding-bottom: 4rem;">
+      <div class="shell-container">
+        <div class="text-center mb-6">
+          <h2 class="section-title">
+            Tudo na palma da <span class="brand-green">mão</span>
+          </h2>
+        </div>
+
+        <div class="row" style="justify-content: center; align-items: flex-start; gap: 2rem;">
+          <!-- Tela 1: Início -->
+          <div style="display: flex; flex-direction: column; align-items: center;">
+            <div style="font-weight: 700; font-size: 1.05rem; margin-bottom: 0.75rem; color: #ffffff;">Tela: Início</div>
+            <div class="phone-mockup">
+              <div class="phone-speaker"></div>
+              <div class="phone-screen">
+                <div class="app-topbar">
+                  <span class="app-logo">nuvvo</span>
+                  <span class="app-exit-btn">Sair</span>
+                </div>
+                <div class="app-greeting">
+                  <div>Boa tarde</div>
+                  <strong style="color: #ffffff; font-size: 0.78rem;">Domingo, 25 de outubro</strong>
+                </div>
+                <div class="app-card">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                    <span style="font-size: 0.65rem; color: #a0a0a0; font-weight: 700; letter-spacing: 0.05em;">RESUMO DE HOJE</span>
+                    <span class="app-live-badge"><span class="app-live-dot"></span> Ao vivo</span>
+                  </div>
+                  <div style="font-size: 0.7rem; color: #a0a0a0;">Saldo do dia</div>
+                  <div style="font-size: 1.4rem; font-weight: 800; color: #ffffff; line-height: 1.2; margin-bottom: 8px;">R$ 1.700,00</div>
+                  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; border-top: 1px solid #2a2a2a; padding-top: 8px;">
+                    <div>
+                      <span style="font-size: 0.65rem; color: #a0a0a0; display: block;">Entradas</span>
+                      <strong style="font-size: 0.85rem; color: #ffffff;">R$ 3.500,00</strong>
+                    </div>
+                    <div>
+                      <span style="font-size: 0.65rem; color: #a0a0a0; display: block;">Despesas</span>
+                      <strong style="font-size: 0.85rem; color: #d9534f;">R$ 1.800,00</strong>
+                    </div>
+                  </div>
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 6px;">
+                  <button class="app-action-btn app-btn-green" type="button">+ Registrar entrada</button>
+                  <button class="app-action-btn app-btn-red" type="button">– Registrar despesa</button>
+                  <button class="app-action-btn app-btn-gray" type="button">Fechar caixa</button>
+                </div>
+                <div>
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; padding: 0 4px;">
+                    <span style="font-size: 0.72rem; font-weight: 700; color: #ffffff;">Últimos lançamentos</span>
+                    <span style="font-size: 0.68rem; color: #287d3c; font-weight: 600;">Ver todos</span>
+                  </div>
+                  <div class="app-card" style="padding: 4px 8px;">
+                    <div class="app-launch-row">
+                      <span style="color: #ffffff;">Cliente · Pix</span>
+                      <strong style="color: #287d3c;">+ R$ 120,00</strong>
+                    </div>
+                    <div class="app-launch-row">
+                      <span style="color: #ffffff;">Esmalte · Material</span>
+                      <strong style="color: #d9534f;">− R$ 45,00</strong>
+                    </div>
+                    <div class="app-launch-row">
+                      <span style="color: #ffffff;">Cliente · Cartão</span>
+                      <strong style="color: #287d3c;">+ R$ 80,00</strong>
+                    </div>
+                  </div>
+                </div>
+                <div class="app-bottom-bar">
+                  <span class="active">● Início</span>
+                  <span>Movimentos</span>
+                  <span>Resumo</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tela 2: Movimentos -->
+          <div style="display: flex; flex-direction: column; align-items: center;">
+            <div style="font-weight: 700; font-size: 1.05rem; margin-bottom: 0.75rem; color: #ffffff;">Tela: Movimentos</div>
+            <div class="phone-mockup">
+              <div class="phone-speaker"></div>
+              <div class="phone-screen">
+                <div class="app-topbar">
+                  <span class="app-logo">nuvvo</span>
+                  <span class="app-exit-btn">Sair</span>
+                </div>
+                <div style="padding: 0 4px;">
+                  <div style="font-size: 0.7rem; color: #a0a0a0;">Lançamentos do dia</div>
+                  <strong style="color: #ffffff; font-size: 0.85rem;">25 de outubro</strong>
+                </div>
+
+                <div class="app-card" style="padding: 6px 10px;">
+                  <div style="display: flex; justify-content: space-between; align-items: baseline;">
+                    <div>
+                      <span style="font-size: 0.65rem; color: #a0a0a0;">Saldo acumulado</span>
+                      <div style="font-size: 1.15rem; font-weight: 800; color: #287d3c;">R$ 1.700,00</div>
+                    </div>
+                    <span style="font-size: 0.68rem; color: #a0a0a0;">5 lançamentos</span>
+                  </div>
+                </div>
+
+                <!-- 5 linhas de exemplo com data/descrição/pagamento e valor colorido -->
+                <div class="app-card" style="padding: 4px 8px; display: flex; flex-direction: column; gap: 2px;">
+                  <div class="app-launch-row">
+                    <div>
+                      <div style="color: #ffffff; font-weight: 600;">Cliente · Manicure</div>
+                      <span style="color: #a0a0a0; font-size: 0.65rem;">Pix</span>
+                    </div>
+                    <strong style="color: #287d3c; font-size: 0.82rem;">+ R$ 120,00</strong>
+                  </div>
+
+                  <div class="app-launch-row">
+                    <div>
+                      <div style="color: #ffffff; font-weight: 600;">Material · Esmaltes</div>
+                      <span style="color: #a0a0a0; font-size: 0.65rem;">Cartão</span>
+                    </div>
+                    <strong style="color: #d9534f; font-size: 0.82rem;">− R$ 620,00</strong>
+                  </div>
+
+                  <div class="app-launch-row">
+                    <div>
+                      <div style="color: #ffffff; font-weight: 600;">Cliente · Alongamento</div>
+                      <span style="color: #a0a0a0; font-size: 0.65rem;">Dinheiro</span>
+                    </div>
+                    <strong style="color: #287d3c; font-size: 0.82rem;">+ R$ 3.380,00</strong>
+                  </div>
+
+                  <div class="app-launch-row">
+                    <div>
+                      <div style="color: #ffffff; font-weight: 600;">Combustível e táxi</div>
+                      <span style="color: #a0a0a0; font-size: 0.65rem;">Pix</span>
+                    </div>
+                    <strong style="color: #d9534f; font-size: 0.82rem;">− R$ 380,00</strong>
+                  </div>
+
+                  <div class="app-launch-row">
+                    <div>
+                      <div style="color: #ffffff; font-weight: 600;">Aluguel do espaço</div>
+                      <span style="color: #a0a0a0; font-size: 0.65rem;">Pix</span>
+                    </div>
+                    <strong style="color: #d9534f; font-size: 0.82rem;">− R$ 800,00</strong>
+                  </div>
+                </div>
+
+                <div class="app-bottom-bar">
+                  <span>Início</span>
+                  <span class="active">● Movimentos</span>
+                  <span>Resumo</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-center mt-6">
+          <p style="font-size: 1.15rem; font-weight: 600; color: #ffffff; margin: 0;">
+            O saldo da tela inicial é o mesmo da lista de movimentos. Sem conta de cabeça.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. Como funciona (3 passos) -->
+    <section class="shell-section" style="background: #0d0d0d; border-top: 1px solid #2a2a2a; padding-top: 4rem; padding-bottom: 4rem;">
+      <div class="shell-container" style="max-width: 960px;">
+        <div class="text-center mb-6">
+          <h2 class="section-title">
+            Como <span class="brand-green">funciona</span>
+          </h2>
+        </div>
+
+        <div class="shell-grid cols-3 gap-4">
+          <div class="step-card">
+            <div class="step-circle">1</div>
+            <h3 style="font-size: 1.15rem; font-weight: 700; color: #ffffff; margin: 0 0 0.5rem 0;">Anote em 5 segundos</h3>
+            <p class="m-0 muted" style="font-size: 0.95rem; line-height: 1.5;">
+              Toque em "Registrar entrada" ou "Registrar despesa" e informe o valor.
+            </p>
+          </div>
+
+          <div class="step-card">
+            <div class="step-circle">2</div>
+            <h3 style="font-size: 1.15rem; font-weight: 700; color: #ffffff; margin: 0 0 0.5rem 0;">Veja o saldo na hora</h3>
+            <p class="m-0 muted" style="font-size: 0.95rem; line-height: 1.5;">
+              O "Saldo do dia" atualiza na tela inicial.
+            </p>
+          </div>
+
+          <div class="step-card">
+            <div class="step-circle">3</div>
+            <h3 style="font-size: 1.15rem; font-weight: 700; color: #ffffff; margin: 0 0 0.5rem 0;">Entenda para onde vai o dinheiro</h3>
+            <p class="m-0 muted" style="font-size: 0.95rem; line-height: 1.5;">
+              Veja o que mais pesa no mês em "Movimentos" e "Resumo".
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. Preço -->
+    <section class="shell-section" style="background: #0d0d0d; border-top: 1px solid #2a2a2a; padding-top: 4rem; padding-bottom: 4rem;">
+      <div class="shell-container">
+        <div class="text-center mb-6">
+          <h2 class="section-title">
+            Menos que um café por <span class="brand-green">semana</span>
+          </h2>
+        </div>
+
+        <div class="price-card">
+          <div class="text-center pb-4" style="border-bottom: 1px solid #2a2a2a;">
+            <div class="row" style="justify-content: center; align-items: baseline; margin-bottom: 0.25rem;">
+              <span style="font-size: 1.3rem; font-weight: 800; color: #287d3c;">R$</span>
+              <span style="font-size: 3.5rem; font-weight: 800; line-height: 1; color: #ffffff; margin: 0 4px;">9,99</span>
+              <span class="muted" style="font-size: 1.1rem; font-weight: 600;">/mês</span>
+            </div>
+            <p class="m-0 muted" style="font-size: 0.9rem;">cobrança recorrente</p>
+          </div>
+
+          <div class="pt-4 pb-4">
+            <div class="price-list-item">
+              <span class="price-check">✓</span>
+              <span>Registrar entradas e saídas</span>
+            </div>
+            <div class="price-list-item">
+              <span class="price-check">✓</span>
+              <span>Saldo do dia atualizado na hora</span>
+            </div>
+            <div class="price-list-item">
+              <span class="price-check">✓</span>
+              <span>Lista de lançamentos e movimentos</span>
+            </div>
+            <div class="price-list-item">
+              <span class="price-check">✓</span>
+              <span>Fechar o caixa do dia</span>
+            </div>
+          </div>
+
+          <div>
+            <a href="[LINK_CHECKOUT]" class="cta-btn" style="width: 100%;">
+              Assinar por R$ 9,99/mês
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. Perguntas frequentes -->
+    <section class="shell-section" style="background: #0d0d0d; border-top: 1px solid #2a2a2a; padding-top: 4rem; padding-bottom: 4rem;">
+      <div class="shell-container" style="max-width: 720px;">
+        <div class="text-center mb-6">
+          <h2 class="section-title">
+            Perguntas <span class="brand-green">frequentes</span>
+          </h2>
+        </div>
+
+        <div>
+          <div class="faq-card">
+            <div class="faq-title">Preciso entender de contabilidade?</div>
+            <p class="m-0 muted" style="font-size: 0.95rem; line-height: 1.5;">Não. O app mostra o que entrou, o que saiu e o que sobrou.</p>
+          </div>
+
+          <div class="faq-card">
+            <div class="faq-title">Posso cancelar quando quiser?</div>
+            <p class="m-0 muted" style="font-size: 0.95rem; line-height: 1.5;">Sim. Você pode cancelar a assinatura quando quiser e não haverá cobrança nas próximas renovações. Além disso, você tem o direito de desistir da compra em até 7 dias corridos após a contratação, conforme o Código de Defesa do Consumidor.</p>
+          </div>
+
+          <div class="faq-card">
+            <div class="faq-title">Meus dados estão seguros?</div>
+            <p class="m-0 muted" style="font-size: 0.95rem; line-height: 1.5;">Seus dados ficam salvos na sua conta do Nuvvo. Você entra no app com o mesmo e-mail usado na assinatura.</p>
+          </div>
+
+          <div class="faq-card">
+            <div class="faq-title">Funciona no celular?</div>
+            <p class="m-0 muted" style="font-size: 0.95rem; line-height: 1.5;">Sim. O Nuvvo foi feito para usar no celular, no seu dia a dia.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. Fechamento -->
+    <section class="shell-section text-center" style="background: #0d0d0d; border-top: 1px solid #2a2a2a; padding-top: 4.5rem; padding-bottom: 4.5rem;">
+      <div class="shell-container" style="max-width: 680px;">
+        <h2 class="section-title" style="margin-bottom: 1.5rem;">
+          Chega de adivinhar. Saiba quanto <span class="brand-green">sobra</span>.
+        </h2>
+        <div class="row" style="justify-content: center;">
+          <a href="[LINK_CHECKOUT]" class="cta-btn">
+            Assinar por R$ 9,99/mês
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modal / Popup de Cadastro -->
+  <dialog class="dialog" id="modal-cadastro" aria-labelledby="modal-title">
+    <div class="modal-card">
+      <button type="button" class="modal-close-btn" id="btn-close-modal" aria-label="Fechar popup">&times;</button>
+      <header>
+        <h2 class="modal-title" id="modal-title">Quase lá! Informe seus dados</h2>
+        <p class="modal-subtitle">Informe seu e-mail e WhatsApp para continuar para o pagamento.</p>
+      </header>
+      <form id="form-cadastro" novalidate>
+        <!-- Campo 1: E-mail -->
+        <div class="modal-field">
+          <label class="modal-label" for="campo-email">E-mail</label>
+          <input type="email" id="campo-email" name="email" class="modal-input" placeholder="seu@email.com" autocomplete="email">
+          <span class="modal-error-msg" id="erro-email">Preencha este campo</span>
+        </div>
+
+        <!-- Campo 2: Telefone / WhatsApp -->
+        <div class="modal-field">
+          <label class="modal-label" for="campo-telefone">Telefone / WhatsApp</label>
+          <input type="tel" id="campo-telefone" name="phone" class="modal-input" placeholder="(00) 00000-0000" autocomplete="tel">
+          <span class="modal-error-msg" id="erro-telefone">Preencha este campo</span>
+        </div>
+
+        <!-- Botão de envio -->
+        <button type="submit" class="modal-submit-btn">
+          Continuar para o pagamento · R$ 9,99/mês
+        </button>
+      </form>
+    </div>
+  </dialog>
+
+  <!-- 9. Rodapé -->
+  <footer class="site-footer">
+    <div class="shell-container">
+      <div class="stack gap-2 text-center" style="align-items: center;">
+        <span class="brand-logo" aria-label="nuvvo">nuvvo</span>
+        <p class="m-0 text-sm font-semibold" style="color: #ffffff;">Nuvvo</p>
+        <p class="m-0 text-sm muted">© 2026 Nuvvo. Todos os direitos reservados.</p>
+        <div class="row gap-4 mt-2" style="justify-content: center;">
+          <a href="[LINK_TERMOS]">Termos de uso</a>
+          <span style="color: #2a2a2a;" aria-hidden="true">•</span>
+          <a href="[LINK_PRIVACIDADE]">Política de privacidade</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const modal = document.getElementById('modal-cadastro');
+      const closeBtn = document.getElementById('btn-close-modal');
+      const form = document.getElementById('form-cadastro');
+
+      const inputEmail = document.getElementById('campo-email');
+      const inputTelefone = document.getElementById('campo-telefone');
+
+      const erroEmail = document.getElementById('erro-email');
+      const erroTelefone = document.getElementById('erro-telefone');
+
+      // Abre modal ao clicar em qualquer botão de assinatura da página
+      const subscribeButtons = document.querySelectorAll('a[href="[LINK_CHECKOUT]"], .cta-btn, .top-nav-btn');
+      subscribeButtons.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          if (modal && typeof modal.showModal === 'function') {
+            modal.showModal();
+          }
+        });
+      });
+
+      // Fechar modal pelo botão (X)
+      if (closeBtn && modal) {
+        closeBtn.addEventListener('click', () => {
+          modal.close();
+        });
+      }
+
+      // Fechar ao clicar fora do card (no backdrop)
+      if (modal) {
+        modal.addEventListener('click', (e) => {
+          const rect = modal.getBoundingClientRect();
+          const isInDialog = (
+            rect.top <= e.clientY &&
+            e.clientY <= rect.top + rect.height &&
+            rect.left <= e.clientX &&
+            e.clientX <= rect.left + rect.width
+          );
+          if (!isInDialog) {
+            modal.close();
+          }
+        });
+      }
+
+      // Máscara de telefone / WhatsApp: (00) 00000-0000 ou (00) 0000-0000 (10 ou 11 dígitos)
+      function formatPhone(value) {
+        const digits = value.replace(/\D/g, '').slice(0, 11);
+        if (digits.length === 0) return '';
+        if (digits.length <= 2) return `(${digits}`;
+        if (digits.length <= 6) return `(${digits.slice(0, 2)}) ${digits.slice(2)}`;
+        if (digits.length <= 10) return `(${digits.slice(0, 2)}) ${digits.slice(2, 6)}-${digits.slice(6)}`;
+        return `(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(7, 11)}`;
+      }
+
+      inputTelefone.addEventListener('input', (e) => {
+        e.target.value = formatPhone(e.target.value);
+        clearFieldError(inputTelefone, erroTelefone);
+      });
+
+      inputEmail.addEventListener('input', () => {
+        clearFieldError(inputEmail, erroEmail);
+      });
+
+      function setFieldError(input, errorEl, message) {
+        input.classList.add('input-error');
+        errorEl.textContent = message;
+        errorEl.classList.add('visible');
+      }
+
+      function clearFieldError(input, errorEl) {
+        input.classList.remove('input-error');
+        if (errorEl) {
+          errorEl.classList.remove('visible');
+        }
+      }
+
+      function isValidEmail(email) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
+      }
+
+      // Validação e Envio
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const email = inputEmail.value.trim();
+        const telefoneRaw = inputTelefone.value.trim();
+        const telefoneDigits = telefoneRaw.replace(/\D/g, '');
+
+        let isValid = true;
+
+        // Validação E-mail
+        if (!email) {
+          setFieldError(inputEmail, erroEmail, 'Preencha este campo');
+          isValid = false;
+        } else if (!isValidEmail(email)) {
+          setFieldError(inputEmail, erroEmail, 'Digite um e-mail válido');
+          isValid = false;
+        } else {
+          clearFieldError(inputEmail, erroEmail);
+        }
+
+        // Validação Telefone (10 ou 11 dígitos)
+        if (!telefoneRaw) {
+          setFieldError(inputTelefone, erroTelefone, 'Preencha este campo');
+          isValid = false;
+        } else if (telefoneDigits.length < 10 || telefoneDigits.length > 11) {
+          setFieldError(inputTelefone, erroTelefone, 'Preencha este campo');
+          isValid = false;
+        } else {
+          clearFieldError(inputTelefone, erroTelefone);
+        }
+
+        if (!isValid) return;
+
+        // [ENDPOINT_CADASTRO]
+        // Os dados ainda não são salvos em nenhum serviço backend.
+        // Conectar aqui futuramente a requisição para salvar no Supabase antes do checkout.
+
+        // [PIXEL_REMARKETING]
+        // Disparo de evento de remarketing "lead" com e-mail e telefone para conexão posterior (ex: Meta Pixel, Google Ads)
+        // Exemplo: if (window.fbq) { fbq('track', 'Lead', { email: email, phone: telefoneDigits }); }
+
+        /*
+         * [CONFIG_GATEWAY_URL_SUCESSO]
+         * Configuração pós-pagamento:
+         * Após o pagamento aprovado, o cliente deve ser levado ao app em https://appnuvvo.com.br/
+         * Ali ele cria a conta ou faz login com o mesmo e-mail usado no pagamento.
+         * Importante: esse retorno é configurado diretamente no gateway de pagamento (URL de sucesso), não na landing page.
+         */
+
+        const checkoutBaseUrl = '[LINK_CHECKOUT]';
+
+        if (!checkoutBaseUrl || checkoutBaseUrl === '[LINK_CHECKOUT]') {
+          // Quando o link de checkout ainda não estiver definido no ambiente
+          window.skipUI.toast('Em breve você será direcionado ao pagamento.', { type: 'success' });
+          setTimeout(() => {
+            modal.close();
+          }, 1800);
+        } else {
+          // Redireciona para o checkout no mesmo clique com os parâmetros preenchidos
+          const params = new URLSearchParams({
+            email: email,
+            phone: telefoneDigits
+          });
+          const separator = checkoutBaseUrl.includes('?') ? '&' : '?';
+          window.location.href = `${checkoutBaseUrl}${separator}${params.toString()}`;
+        }
+      });
+    });
+  </script>
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/vce701823e78c4301a35b7e07294d87301792088814092" integrity="sha512-UKNk8GbxkABxKcXYuLkO16EleLGUkcvJWtpSNmExE0Too3ZaFAxTscNWEc1OdAv5/BikHawapSCaiD2XCmp+Bw==" data-cf-beacon='{"version":"2024.11.0","token":"7004b19d732d43b298810595cc4050b1","r":1,"spa":2}' crossorigin="anonymous"></script>
+</body>
+</html>
