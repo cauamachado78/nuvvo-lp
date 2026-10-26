@@ -588,6 +588,55 @@
       transform: translateY(-1px);
       box-shadow: 0 4px 18px rgba(40, 125, 60, 0.45);
     }
+
+    .modal-status {
+      font-size: 0.85rem;
+      color: #a0a0a0;
+      text-align: center;
+      margin-top: 12px;
+    }
+
+    /* AJUSTES CELULAR: CABEÇALHO FIXO E TELAS EMPILHADAS */
+    @media (max-width: 767px) {
+      header.top-nav {
+        position: sticky !important;
+        top: 0;
+        z-index: 50;
+        background: rgba(13, 13, 13, 0.92) !important;
+        -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(10px);
+      }
+      header.top-nav > .shell-container {
+        padding: 10px 20px !important;
+        min-height: 58px;
+      }
+      .top-nav-btn {
+        font-size: 0.78rem !important;
+        padding: 0.45rem 0.85rem !important;
+        border-radius: 999px !important;
+        white-space: nowrap;
+      }
+      .row[style*="gap: 2rem"] {
+        flex-direction: column !important;
+        align-items: center !important;
+      }
+    }
+  
+  /* MARGEM LATERAL NO CELULAR */
+@media (max-width: 767px) {
+  .shell-container {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+  main section.shell-section {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+  .phone-mockup {
+    max-width: 300px !important;
+    margin: 0 auto;
+  }
+}
   </style>
 </head>
 <body>
@@ -625,17 +674,14 @@
             <div class="phone-mockup">
               <div class="phone-speaker"></div>
               <div class="phone-screen">
-                <!-- Barra superior -->
                 <div class="app-topbar">
                   <span class="app-logo">nuvvo</span>
                   <span class="app-exit-btn">Sair</span>
                 </div>
-                <!-- Saudação -->
                 <div class="app-greeting">
                   <div>Boa tarde</div>
                   <strong style="color: #ffffff; font-size: 0.78rem;">Domingo, 25 de outubro</strong>
                 </div>
-                <!-- Card Principal -->
                 <div class="app-card">
                   <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
                     <span style="font-size: 0.65rem; color: #a0a0a0; font-weight: 700; letter-spacing: 0.05em;">RESUMO DE HOJE</span>
@@ -654,13 +700,11 @@
                     </div>
                   </div>
                 </div>
-                <!-- 3 Botões empilhados -->
                 <div style="display: flex; flex-direction: column; gap: 6px;">
                   <button class="app-action-btn app-btn-green" type="button">+ Registrar entrada</button>
                   <button class="app-action-btn app-btn-red" type="button">– Registrar despesa</button>
                   <button class="app-action-btn app-btn-gray" type="button">Fechar caixa</button>
                 </div>
-                <!-- Últimos lançamentos -->
                 <div>
                   <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; padding: 0 4px;">
                     <span style="font-size: 0.72rem; font-weight: 700; color: #ffffff;">Últimos lançamentos</span>
@@ -681,7 +725,6 @@
                     </div>
                   </div>
                 </div>
-                <!-- Barra inferior -->
                 <div class="app-bottom-bar">
                   <span class="active">● Início</span>
                   <span>Movimentos</span>
@@ -792,7 +835,6 @@
         <div class="row" style="justify-content: center; align-items: flex-start; gap: 2rem;">
           <!-- Tela 1: Início -->
           <div style="display: flex; flex-direction: column; align-items: center;">
-            <div style="font-weight: 700; font-size: 1.05rem; margin-bottom: 0.75rem; color: #ffffff;">Tela: Início</div>
             <div class="phone-mockup">
               <div class="phone-speaker"></div>
               <div class="phone-screen">
@@ -858,7 +900,6 @@
 
           <!-- Tela 2: Movimentos -->
           <div style="display: flex; flex-direction: column; align-items: center;">
-            <div style="font-weight: 700; font-size: 1.05rem; margin-bottom: 0.75rem; color: #ffffff;">Tela: Movimentos</div>
             <div class="phone-mockup">
               <div class="phone-speaker"></div>
               <div class="phone-screen">
@@ -881,7 +922,6 @@
                   </div>
                 </div>
 
-                <!-- 5 linhas de exemplo com data/descrição/pagamento e valor colorido -->
                 <div class="app-card" style="padding: 4px 8px; display: flex; flex-direction: column; gap: 2px;">
                   <div class="app-launch-row">
                     <div>
@@ -1083,21 +1123,18 @@
         <p class="modal-subtitle">Informe seu e-mail e WhatsApp para continuar para o pagamento.</p>
       </header>
       <form id="form-cadastro" novalidate>
-        <!-- Campo 1: E-mail -->
         <div class="modal-field">
           <label class="modal-label" for="campo-email">E-mail</label>
           <input type="email" id="campo-email" name="email" class="modal-input" placeholder="seu@email.com" autocomplete="email">
           <span class="modal-error-msg" id="erro-email">Preencha este campo</span>
         </div>
 
-        <!-- Campo 2: Telefone / WhatsApp -->
         <div class="modal-field">
           <label class="modal-label" for="campo-telefone">Telefone / WhatsApp</label>
           <input type="tel" id="campo-telefone" name="phone" class="modal-input" placeholder="(00) 00000-0000" autocomplete="tel">
           <span class="modal-error-msg" id="erro-telefone">Preencha este campo</span>
         </div>
 
-        <!-- Botão de envio -->
         <button type="submit" class="modal-submit-btn">
           Continuar para o pagamento · R$ 9,99/mês
         </button>
@@ -1126,48 +1163,39 @@
       const modal = document.getElementById('modal-cadastro');
       const closeBtn = document.getElementById('btn-close-modal');
       const form = document.getElementById('form-cadastro');
-
       const inputEmail = document.getElementById('campo-email');
       const inputTelefone = document.getElementById('campo-telefone');
-
       const erroEmail = document.getElementById('erro-email');
       const erroTelefone = document.getElementById('erro-telefone');
 
-      // Abre modal ao clicar em qualquer botão de assinatura da página
+      // Mensagem de status dentro do popup
+      const statusEl = document.createElement('p');
+      statusEl.className = 'modal-status';
+      statusEl.setAttribute('aria-live', 'polite');
+      form.appendChild(statusEl);
+
+      // Abre o popup em qualquer botão de assinatura
       const subscribeButtons = document.querySelectorAll('a[href="[LINK_CHECKOUT]"], .cta-btn, .top-nav-btn');
       subscribeButtons.forEach(btn => {
         btn.addEventListener('click', (e) => {
           e.preventDefault();
-          if (modal && typeof modal.showModal === 'function') {
-            modal.showModal();
-          }
+          if (modal && typeof modal.showModal === 'function') modal.showModal();
         });
       });
 
-      // Fechar modal pelo botão (X)
-      if (closeBtn && modal) {
-        closeBtn.addEventListener('click', () => {
-          modal.close();
-        });
-      }
+      if (closeBtn && modal) closeBtn.addEventListener('click', () => modal.close());
 
-      // Fechar ao clicar fora do card (no backdrop)
+      // Fecha ao clicar fora do card
       if (modal) {
         modal.addEventListener('click', (e) => {
           const rect = modal.getBoundingClientRect();
-          const isInDialog = (
-            rect.top <= e.clientY &&
-            e.clientY <= rect.top + rect.height &&
-            rect.left <= e.clientX &&
-            e.clientX <= rect.left + rect.width
-          );
-          if (!isInDialog) {
-            modal.close();
-          }
+          const dentro = rect.top <= e.clientY && e.clientY <= rect.top + rect.height &&
+                         rect.left <= e.clientX && e.clientX <= rect.left + rect.width;
+          if (!dentro) modal.close();
         });
       }
 
-      // Máscara de telefone / WhatsApp: (00) 00000-0000 ou (00) 0000-0000 (10 ou 11 dígitos)
+      // Máscara de telefone: (00) 00000-0000
       function formatPhone(value) {
         const digits = value.replace(/\D/g, '').slice(0, 11);
         if (digits.length === 0) return '';
@@ -1181,39 +1209,29 @@
         e.target.value = formatPhone(e.target.value);
         clearFieldError(inputTelefone, erroTelefone);
       });
-
-      inputEmail.addEventListener('input', () => {
-        clearFieldError(inputEmail, erroEmail);
-      });
+      inputEmail.addEventListener('input', () => clearFieldError(inputEmail, erroEmail));
 
       function setFieldError(input, errorEl, message) {
         input.classList.add('input-error');
         errorEl.textContent = message;
         errorEl.classList.add('visible');
       }
-
       function clearFieldError(input, errorEl) {
         input.classList.remove('input-error');
-        if (errorEl) {
-          errorEl.classList.remove('visible');
-        }
+        if (errorEl) errorEl.classList.remove('visible');
       }
-
       function isValidEmail(email) {
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
       }
 
-      // Validação e Envio
       form.addEventListener('submit', (e) => {
         e.preventDefault();
+        statusEl.textContent = '';
 
         const email = inputEmail.value.trim();
-        const telefoneRaw = inputTelefone.value.trim();
-        const telefoneDigits = telefoneRaw.replace(/\D/g, '');
-
+        const telefoneDigits = inputTelefone.value.replace(/\D/g, '');
         let isValid = true;
 
-        // Validação E-mail
         if (!email) {
           setFieldError(inputEmail, erroEmail, 'Preencha este campo');
           isValid = false;
@@ -1224,12 +1242,11 @@
           clearFieldError(inputEmail, erroEmail);
         }
 
-        // Validação Telefone (10 ou 11 dígitos)
-        if (!telefoneRaw) {
+        if (!telefoneDigits) {
           setFieldError(inputTelefone, erroTelefone, 'Preencha este campo');
           isValid = false;
         } else if (telefoneDigits.length < 10 || telefoneDigits.length > 11) {
-          setFieldError(inputTelefone, erroTelefone, 'Preencha este campo');
+          setFieldError(inputTelefone, erroTelefone, 'Digite um telefone com DDD');
           isValid = false;
         } else {
           clearFieldError(inputTelefone, erroTelefone);
@@ -1237,39 +1254,20 @@
 
         if (!isValid) return;
 
-        // [ENDPOINT_CADASTRO]
-        // Os dados ainda não são salvos em nenhum serviço backend.
-        // Conectar aqui futuramente a requisição para salvar no Supabase antes do checkout.
-
-        // [PIXEL_REMARKETING]
-        // Disparo de evento de remarketing "lead" com e-mail e telefone para conexão posterior (ex: Meta Pixel, Google Ads)
-        // Exemplo: if (window.fbq) { fbq('track', 'Lead', { email: email, phone: telefoneDigits }); }
-
-        /*
-         * [CONFIG_GATEWAY_URL_SUCESSO]
-         * Configuração pós-pagamento:
-         * Após o pagamento aprovado, o cliente deve ser levado ao app em https://appnuvvo.com.br/
-         * Ali ele cria a conta ou faz login com o mesmo e-mail usado no pagamento.
-         * Importante: esse retorno é configurado diretamente no gateway de pagamento (URL de sucesso), não na landing page.
-         */
+        // [ENDPOINT_CADASTRO] Salvar e-mail e telefone aqui, se houver backend.
+        // [PIXEL_REMARKETING] Disparar evento "Lead" aqui, se usar Meta Pixel ou Google Ads.
+        // [CONFIG_GATEWAY_URL_SUCESSO] A URL de sucesso fica configurada no gateway de pagamento.
 
         const checkoutBaseUrl = '[LINK_CHECKOUT]';
-
-        if (!checkoutBaseUrl || checkoutBaseUrl === '[LINK_CHECKOUT]') {
-          // Quando o link de checkout ainda não estiver definido no ambiente
-          window.skipUI.toast('Em breve você será direcionado ao pagamento.', { type: 'success' });
-          setTimeout(() => {
-            modal.close();
-          }, 1800);
-        } else {
-          // Redireciona para o checkout no mesmo clique com os parâmetros preenchidos
-          const params = new URLSearchParams({
-            email: email,
-            phone: telefoneDigits
-          });
-          const separator = checkoutBaseUrl.includes('?') ? '&' : '?';
-          window.location.href = `${checkoutBaseUrl}${separator}${params.toString()}`;
+        if (checkoutBaseUrl === '[LINK_CHECKOUT]') {
+          statusEl.textContent = 'Em breve você será direcionado ao pagamento.';
+          setTimeout(() => modal.close(), 1800);
+          return;
         }
+
+        const params = new URLSearchParams({ email: email, phone: telefoneDigits });
+        const separator = checkoutBaseUrl.includes('?') ? '&' : '?';
+        window.location.href = `${checkoutBaseUrl}${separator}${params.toString()}`;
       });
     });
   </script>
