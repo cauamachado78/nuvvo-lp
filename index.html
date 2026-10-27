@@ -670,7 +670,7 @@
   <header class="top-nav">
     <div class="shell-container p-3" style="display: flex; justify-content: space-between; align-items: center;">
       <a href="#" class="brand-logo" aria-label="nuvvo">nuvvo</a>
-      <a href="[LINK_CHECKOUT]" class="top-nav-btn">Assinar · R$ 9,99/mês</a>
+     <button type="button" class="top-nav-btn" data-open-modal>Assinar · R$ 9,99/mês</button>
     </div>
   </header>
 
@@ -687,9 +687,9 @@
               Anote entradas e saídas do seu negócio em 5 segundos, no celular, e veja o que realmente ficou. Feito para motoristas de app, manicures, cabeleireiras, confeiteiras e autônomos.
             </p>
             <div>
-              <a href="[LINK_CHECKOUT]" class="cta-btn">
-                Quero organizar meu negócio · R$ 9,99/mês
-              </a>
+<button type="button" class="cta-btn" data-open-modal>
+  Quero organizar meu negócio · R$ 9,99/mês
+</button>
             </div>
           </div>
 
@@ -1083,9 +1083,9 @@
           </div>
 
           <div>
-            <a href="[LINK_CHECKOUT]" class="cta-btn" style="width: 100%;">
-              Assinar por R$ 9,99/mês
-            </a>
+<button type="button" class="cta-btn" style="width: 100%;" data-open-modal>
+  Assinar por R$ 9,99/mês
+</button>
           </div>
         </div>
       </div>
@@ -1131,9 +1131,9 @@
           Chega de adivinhar. Saiba quanto <span class="brand-green">sobra</span>.
         </h2>
         <div class="row" style="justify-content: center;">
-          <a href="[LINK_CHECKOUT]" class="cta-btn">
-            Assinar por R$ 9,99/mês
-          </a>
+<button type="button" class="cta-btn" data-open-modal>
+  Assinar por R$ 9,99/mês
+</button>
         </div>
       </div>
     </section>
@@ -1145,9 +1145,15 @@
       <button type="button" class="modal-close-btn" id="btn-close-modal" aria-label="Fechar popup">&times;</button>
       <header>
         <h2 class="modal-title" id="modal-title">Quase lá! Informe seus dados</h2>
-        <p class="modal-subtitle">Informe seu e-mail e WhatsApp para continuar para o pagamento.</p>
+        <p class="modal-subtitle">Informe seus dados para continuar para o pagamento.</p>
       </header>
       <form id="form-cadastro" novalidate>
+        <div class="modal-field">
+          <label class="modal-label" for="campo-nome">Nome completo</label>
+          <input type="text" id="campo-nome" name="name" class="modal-input" placeholder="Seu nome completo" autocomplete="name">
+          <span class="modal-error-msg" id="erro-nome">Preencha este campo</span>
+        </div>
+
         <div class="modal-field">
           <label class="modal-label" for="campo-email">E-mail</label>
           <input type="email" id="campo-email" name="email" class="modal-input" placeholder="seu@email.com" autocomplete="email">
@@ -1158,6 +1164,12 @@
           <label class="modal-label" for="campo-telefone">Telefone / WhatsApp</label>
           <input type="tel" id="campo-telefone" name="phone" class="modal-input" placeholder="(00) 00000-0000" autocomplete="tel">
           <span class="modal-error-msg" id="erro-telefone">Preencha este campo</span>
+        </div>
+
+        <div class="modal-field">
+          <label class="modal-label" for="campo-cpf">CPF</label>
+          <input type="text" id="campo-cpf" name="cpf" class="modal-input" placeholder="000.000.000-00" inputmode="numeric" autocomplete="off">
+          <span class="modal-error-msg" id="erro-cpf">Preencha este campo</span>
         </div>
 
         <button type="submit" class="modal-submit-btn">
@@ -1175,28 +1187,30 @@
         <p class="m-0 text-sm font-semibold" style="color: #ffffff;">Nuvvo</p>
         <p class="m-0 text-sm muted">© 2026 Nuvvo. Todos os direitos reservados.</p>
         <div class="row gap-4 mt-2" style="justify-content: center;">
-          <a href="[LINK_TERMOS]">Termos de uso</a>
-          <span style="color: #2a2a2a;" aria-hidden="true">•</span>
-          <a href="[LINK_PRIVACIDADE]">Política de privacidade</a>
+        <a href="#" style="opacity: .45; pointer-events: none;" aria-disabled="true">Termos de uso</a>
+        <span style="color: #2a2a2a;" aria-hidden="true">•</span>
+        <a href="#" style="opacity: .45; pointer-events: none;" aria-disabled="true">Política de privacidade</a>
         </div>
       </div>
     </div>
   </footer>
 
 <script>
-  // Preencha com os dados do seu projeto Supabase
   const SUPABASE_URL = 'https://flumfzlqtjxsvwhzecdc.supabase.co';
   const SUPABASE_ANON_KEY = 'sb_publishable_6skOU7S--TL9JhAb9j8rUQ_PLi-lRXE';
-  const LINK_CHECKOUT = '[LINK_CHECKOUT]';
 
   document.addEventListener('DOMContentLoaded', () => {
     const modal = document.getElementById('modal-cadastro');
     const closeBtn = document.getElementById('btn-close-modal');
     const form = document.getElementById('form-cadastro');
+    const inputNome = document.getElementById('campo-nome');
     const inputEmail = document.getElementById('campo-email');
     const inputTelefone = document.getElementById('campo-telefone');
+    const inputCpf = document.getElementById('campo-cpf');
+    const erroNome = document.getElementById('erro-nome');
     const erroEmail = document.getElementById('erro-email');
     const erroTelefone = document.getElementById('erro-telefone');
+    const erroCpf = document.getElementById('erro-cpf');
     const submitBtn = form.querySelector('.modal-submit-btn');
 
     const statusEl = document.createElement('p');
@@ -1204,7 +1218,64 @@
     statusEl.setAttribute('aria-live', 'polite');
     form.appendChild(statusEl);
 
-    document.querySelectorAll('a[href="[LINK_CHECKOUT]"], .cta-btn, .top-nav-btn').forEach(btn => {
+    function setFieldError(input, errorEl, msg) {
+      input.classList.add('input-error');
+      errorEl.textContent = msg;
+      errorEl.classList.add('visible');
+    }
+
+    function clearFieldError(input, errorEl) {
+      input.classList.remove('input-error');
+      errorEl.classList.remove('visible');
+    }
+
+    function formatPhone(v) {
+      const d = v.replace(/\D/g, '').slice(0, 11);
+      if (d.length <= 10) {
+        return d.replace(/(\d{2})(\d)/, '($1) $2')
+                .replace(/(\d{4})(\d)/, '$1-$2');
+      }
+      return d.replace(/(\d{2})(\d)/, '($1) $2')
+              .replace(/(\d{5})(\d)/, '$1-$2');
+    }
+
+    function formatCpf(v) {
+      return v.replace(/\D/g, '')
+        .slice(0, 11)
+        .replace(/(\d{3})(\d)/, '$1.$2')
+        .replace(/(\d{3})(\d)/, '$1.$2')
+        .replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+    }
+
+    function cpfValido(cpf) {
+      const n = cpf.replace(/\D/g, '');
+      if (n.length !== 11 || /^(\d)\1{10}$/.test(n)) return false;
+      let soma = 0;
+      for (let i = 0; i < 9; i++) soma += parseInt(n[i]) * (10 - i);
+      let d1 = (soma * 10) % 11;
+      if (d1 === 10) d1 = 0;
+      if (d1 !== parseInt(n[9])) return false;
+      soma = 0;
+      for (let i = 0; i < 10; i++) soma += parseInt(n[i]) * (11 - i);
+      let d2 = (soma * 10) % 11;
+      if (d2 === 10) d2 = 0;
+      return d2 === parseInt(n[10]);
+    }
+
+    // Máscaras
+    inputTelefone.addEventListener('input', (e) => {
+      e.target.value = formatPhone(e.target.value);
+      clearFieldError(inputTelefone, erroTelefone);
+    });
+    inputCpf.addEventListener('input', (e) => {
+      e.target.value = formatCpf(e.target.value);
+      clearFieldError(inputCpf, erroCpf);
+    });
+    inputEmail.addEventListener('input', () => clearFieldError(inputEmail, erroEmail));
+    inputNome.addEventListener('input', () => clearFieldError(inputNome, erroNome));
+
+    // Abertura do modal
+    document.querySelectorAll('[data-open-modal], .cta-button, .header-cta').forEach((btn) => {
       btn.addEventListener('click', (e) => {
         e.preventDefault();
         modal.showModal();
@@ -1214,44 +1285,26 @@
     closeBtn.addEventListener('click', () => modal.close());
 
     modal.addEventListener('click', (e) => {
-      const r = modal.getBoundingClientRect();
-      const dentro = r.top <= e.clientY && e.clientY <= r.top + r.height &&
-                     r.left <= e.clientX && e.clientX <= r.left + r.width;
-      if (!dentro) modal.close();
+      if (e.target === modal) modal.close();
     });
-
-    function formatPhone(value) {
-      const d = value.replace(/\D/g, '').slice(0, 11);
-      if (d.length === 0) return '';
-      if (d.length <= 2) return `(${d}`;
-      if (d.length <= 6) return `(${d.slice(0, 2)}) ${d.slice(2)}`;
-      if (d.length <= 10) return `(${d.slice(0, 2)}) ${d.slice(2, 6)}-${d.slice(6)}`;
-      return `(${d.slice(0, 2)}) ${d.slice(2, 7)}-${d.slice(7, 11)}`;
-    }
-
-    function setFieldError(input, errorEl, msg) {
-      input.classList.add('input-error');
-      errorEl.textContent = msg;
-      errorEl.classList.add('visible');
-    }
-    function clearFieldError(input, errorEl) {
-      input.classList.remove('input-error');
-      errorEl.classList.remove('visible');
-    }
-
-    inputTelefone.addEventListener('input', (e) => {
-      e.target.value = formatPhone(e.target.value);
-      clearFieldError(inputTelefone, erroTelefone);
-    });
-    inputEmail.addEventListener('input', () => clearFieldError(inputEmail, erroEmail));
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       statusEl.textContent = '';
+      statusEl.classList.remove('visible');
 
+      const nome = inputNome.value.trim();
       const email = inputEmail.value.trim();
       const telefone = inputTelefone.value.replace(/\D/g, '');
+      const cpf = inputCpf.value.replace(/\D/g, '');
       let valido = true;
+
+      if (!nome || nome.length < 2) {
+        setFieldError(inputNome, erroNome, 'Digite seu nome completo');
+        valido = false;
+      } else {
+        clearFieldError(inputNome, erroNome);
+      }
 
       if (!email) {
         setFieldError(inputEmail, erroEmail, 'Preencha este campo');
@@ -1273,36 +1326,54 @@
         clearFieldError(inputTelefone, erroTelefone);
       }
 
+      if (!cpf) {
+        setFieldError(inputCpf, erroCpf, 'Preencha este campo');
+        valido = false;
+      } else if (!cpfValido(cpf)) {
+        setFieldError(inputCpf, erroCpf, 'Digite um CPF válido');
+        valido = false;
+      } else {
+        clearFieldError(inputCpf, erroCpf);
+      }
+
       if (!valido) return;
 
       submitBtn.disabled = true;
-      statusEl.textContent = 'Salvando seus dados...';
+      statusEl.textContent = 'Gerando sua assinatura...';
+      statusEl.classList.add('visible');
 
       try {
-        const res = await fetch(`${SUPABASE_URL}/rest/v1/leads`, {
+        const res = await fetch(`${SUPABASE_URL}/functions/v1/criar-assinatura`, {
           method: 'POST',
           headers: {
-            'apikey': SUPABASE_ANON_KEY,
-            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
             'Content-Type': 'application/json',
-            'Prefer': 'return=minimal'
+            'apikey': SUPABASE_ANON_KEY,
+            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
           },
-          body: JSON.stringify({ email, telefone })
+          body: JSON.stringify({
+            nome: nome,
+            email: email,
+            telefone: telefone,
+            cpfCnpj: cpf
+          })
         });
 
-        if (!res.ok) throw new Error('Erro ao salvar');
+        const data = await res.json();
 
-        if (LINK_CHECKOUT === '[LINK_CHECKOUT]') {
-          statusEl.textContent = 'Dados salvos. O pagamento será configurado em breve.';
-          return;
+        if (!res.ok) {
+          throw new Error(data.error || 'Não foi possível gerar o pagamento.');
         }
 
-        const params = new URLSearchParams({ email, phone: telefone });
-        const sep = LINK_CHECKOUT.includes('?') ? '&' : '?';
-        window.location.href = `${LINK_CHECKOUT}${sep}${params.toString()}`;
+        if (!data.invoiceUrl) {
+          throw new Error('Link de pagamento não retornado.');
+        }
+
+        statusEl.textContent = 'Redirecionando para o pagamento...';
+        window.location.href = data.invoiceUrl;
+
       } catch (err) {
-        statusEl.textContent = 'Não conseguimos salvar agora. Tente novamente.';
-      } finally {
+        statusEl.textContent = err.message || 'Não conseguimos gerar o pagamento. Tente novamente.';
+        statusEl.classList.add('visible');
         submitBtn.disabled = false;
       }
     });
