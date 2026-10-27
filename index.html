@@ -637,6 +637,31 @@
     margin: 0 auto;
   }
 }
+ /* CORREÇÃO MOBILE: CELULARES EMPILHADOS E HERO SEM SOBREPOSIÇÃO */
+@media (max-width: 767px) {
+  .telas-app {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 2.5rem !important;
+  }
+  .telas-app > div {
+    width: 100%;
+    max-width: 320px;
+  }
+
+  .hero-grid {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+  .hero-phone-wrap {
+    margin-top: 2.5rem !important;
+  }
+  .hero-glow {
+    display: none !important;
+  }
+}
+  
   </style>
 </head>
 <body>
@@ -832,7 +857,7 @@
           </h2>
         </div>
 
-        <div class="row" style="justify-content: center; align-items: flex-start; gap: 2rem;">
+   <div class="row telas-app" style="justify-content: center; align-items: flex-start; gap: 2rem;">
           <!-- Tela 1: Início -->
           <div style="display: flex; flex-direction: column; align-items: center;">
             <div class="phone-mockup">
