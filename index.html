@@ -1183,119 +1183,131 @@
     </div>
   </footer>
 
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const modal = document.getElementById('modal-cadastro');
-      const closeBtn = document.getElementById('btn-close-modal');
-      const form = document.getElementById('form-cadastro');
-      const inputEmail = document.getElementById('campo-email');
-      const inputTelefone = document.getElementById('campo-telefone');
-      const erroEmail = document.getElementById('erro-email');
-      const erroTelefone = document.getElementById('erro-telefone');
+<script>
+  // Preencha com os dados do seu projeto Supabase
+  const SUPABASE_URL = 'https://flumfzlqtjxsvwhzecdc.supabase.co/rest/v1/';
+  const SUPABASE_ANON_KEY = 'sb_publishable_6skOU7S--TL9JhAb9j8rUQ_PLi-lRXE';
+  const LINK_CHECKOUT = '[LINK_CHECKOUT]';
 
-      // Mensagem de status dentro do popup
-      const statusEl = document.createElement('p');
-      statusEl.className = 'modal-status';
-      statusEl.setAttribute('aria-live', 'polite');
-      form.appendChild(statusEl);
+  document.addEventListener('DOMContentLoaded', () => {
+    const modal = document.getElementById('modal-cadastro');
+    const closeBtn = document.getElementById('btn-close-modal');
+    const form = document.getElementById('form-cadastro');
+    const inputEmail = document.getElementById('campo-email');
+    const inputTelefone = document.getElementById('campo-telefone');
+    const erroEmail = document.getElementById('erro-email');
+    const erroTelefone = document.getElementById('erro-telefone');
+    const submitBtn = form.querySelector('.modal-submit-btn');
 
-      // Abre o popup em qualquer botão de assinatura
-      const subscribeButtons = document.querySelectorAll('a[href="[LINK_CHECKOUT]"], .cta-btn, .top-nav-btn');
-      subscribeButtons.forEach(btn => {
-        btn.addEventListener('click', (e) => {
-          e.preventDefault();
-          if (modal && typeof modal.showModal === 'function') modal.showModal();
-        });
-      });
+    const statusEl = document.createElement('p');
+    statusEl.className = 'modal-status';
+    statusEl.setAttribute('aria-live', 'polite');
+    form.appendChild(statusEl);
 
-      if (closeBtn && modal) closeBtn.addEventListener('click', () => modal.close());
-
-      // Fecha ao clicar fora do card
-      if (modal) {
-        modal.addEventListener('click', (e) => {
-          const rect = modal.getBoundingClientRect();
-          const dentro = rect.top <= e.clientY && e.clientY <= rect.top + rect.height &&
-                         rect.left <= e.clientX && e.clientX <= rect.left + rect.width;
-          if (!dentro) modal.close();
-        });
-      }
-
-      // Máscara de telefone: (00) 00000-0000
-      function formatPhone(value) {
-        const digits = value.replace(/\D/g, '').slice(0, 11);
-        if (digits.length === 0) return '';
-        if (digits.length <= 2) return `(${digits}`;
-        if (digits.length <= 6) return `(${digits.slice(0, 2)}) ${digits.slice(2)}`;
-        if (digits.length <= 10) return `(${digits.slice(0, 2)}) ${digits.slice(2, 6)}-${digits.slice(6)}`;
-        return `(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(7, 11)}`;
-      }
-
-      inputTelefone.addEventListener('input', (e) => {
-        e.target.value = formatPhone(e.target.value);
-        clearFieldError(inputTelefone, erroTelefone);
-      });
-      inputEmail.addEventListener('input', () => clearFieldError(inputEmail, erroEmail));
-
-      function setFieldError(input, errorEl, message) {
-        input.classList.add('input-error');
-        errorEl.textContent = message;
-        errorEl.classList.add('visible');
-      }
-      function clearFieldError(input, errorEl) {
-        input.classList.remove('input-error');
-        if (errorEl) errorEl.classList.remove('visible');
-      }
-      function isValidEmail(email) {
-        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
-      }
-
-      form.addEventListener('submit', (e) => {
+    document.querySelectorAll('a[href="[LINK_CHECKOUT]"], .cta-btn, .top-nav-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
         e.preventDefault();
-        statusEl.textContent = '';
+        modal.showModal();
+      });
+    });
 
-        const email = inputEmail.value.trim();
-        const telefoneDigits = inputTelefone.value.replace(/\D/g, '');
-        let isValid = true;
+    closeBtn.addEventListener('click', () => modal.close());
 
-        if (!email) {
-          setFieldError(inputEmail, erroEmail, 'Preencha este campo');
-          isValid = false;
-        } else if (!isValidEmail(email)) {
-          setFieldError(inputEmail, erroEmail, 'Digite um e-mail válido');
-          isValid = false;
-        } else {
-          clearFieldError(inputEmail, erroEmail);
-        }
+    modal.addEventListener('click', (e) => {
+      const r = modal.getBoundingClientRect();
+      const dentro = r.top <= e.clientY && e.clientY <= r.top + r.height &&
+                     r.left <= e.clientX && e.clientX <= r.left + r.width;
+      if (!dentro) modal.close();
+    });
 
-        if (!telefoneDigits) {
-          setFieldError(inputTelefone, erroTelefone, 'Preencha este campo');
-          isValid = false;
-        } else if (telefoneDigits.length < 10 || telefoneDigits.length > 11) {
-          setFieldError(inputTelefone, erroTelefone, 'Digite um telefone com DDD');
-          isValid = false;
-        } else {
-          clearFieldError(inputTelefone, erroTelefone);
-        }
+    function formatPhone(value) {
+      const d = value.replace(/\D/g, '').slice(0, 11);
+      if (d.length === 0) return '';
+      if (d.length <= 2) return `(${d}`;
+      if (d.length <= 6) return `(${d.slice(0, 2)}) ${d.slice(2)}`;
+      if (d.length <= 10) return `(${d.slice(0, 2)}) ${d.slice(2, 6)}-${d.slice(6)}`;
+      return `(${d.slice(0, 2)}) ${d.slice(2, 7)}-${d.slice(7, 11)}`;
+    }
 
-        if (!isValid) return;
+    function setFieldError(input, errorEl, msg) {
+      input.classList.add('input-error');
+      errorEl.textContent = msg;
+      errorEl.classList.add('visible');
+    }
+    function clearFieldError(input, errorEl) {
+      input.classList.remove('input-error');
+      errorEl.classList.remove('visible');
+    }
 
-        // [ENDPOINT_CADASTRO] Salvar e-mail e telefone aqui, se houver backend.
-        // [PIXEL_REMARKETING] Disparar evento "Lead" aqui, se usar Meta Pixel ou Google Ads.
-        // [CONFIG_GATEWAY_URL_SUCESSO] A URL de sucesso fica configurada no gateway de pagamento.
+    inputTelefone.addEventListener('input', (e) => {
+      e.target.value = formatPhone(e.target.value);
+      clearFieldError(inputTelefone, erroTelefone);
+    });
+    inputEmail.addEventListener('input', () => clearFieldError(inputEmail, erroEmail));
 
-        const checkoutBaseUrl = '[LINK_CHECKOUT]';
-        if (checkoutBaseUrl === '[LINK_CHECKOUT]') {
-          statusEl.textContent = 'Em breve você será direcionado ao pagamento.';
-          setTimeout(() => modal.close(), 1800);
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      statusEl.textContent = '';
+
+      const email = inputEmail.value.trim();
+      const telefone = inputTelefone.value.replace(/\D/g, '');
+      let valido = true;
+
+      if (!email) {
+        setFieldError(inputEmail, erroEmail, 'Preencha este campo');
+        valido = false;
+      } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        setFieldError(inputEmail, erroEmail, 'Digite um e-mail válido');
+        valido = false;
+      } else {
+        clearFieldError(inputEmail, erroEmail);
+      }
+
+      if (!telefone) {
+        setFieldError(inputTelefone, erroTelefone, 'Preencha este campo');
+        valido = false;
+      } else if (telefone.length < 10 || telefone.length > 11) {
+        setFieldError(inputTelefone, erroTelefone, 'Digite um telefone com DDD');
+        valido = false;
+      } else {
+        clearFieldError(inputTelefone, erroTelefone);
+      }
+
+      if (!valido) return;
+
+      submitBtn.disabled = true;
+      statusEl.textContent = 'Salvando seus dados...';
+
+      try {
+        const res = await fetch(`${SUPABASE_URL}/rest/v1/leads`, {
+          method: 'POST',
+          headers: {
+            'apikey': SUPABASE_ANON_KEY,
+            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+            'Content-Type': 'application/json',
+            'Prefer': 'return=minimal'
+          },
+          body: JSON.stringify({ email, telefone })
+        });
+
+        if (!res.ok) throw new Error('Erro ao salvar');
+
+        if (LINK_CHECKOUT === '[LINK_CHECKOUT]') {
+          statusEl.textContent = 'Dados salvos. O pagamento será configurado em breve.';
           return;
         }
 
-        const params = new URLSearchParams({ email: email, phone: telefoneDigits });
-        const separator = checkoutBaseUrl.includes('?') ? '&' : '?';
-        window.location.href = `${checkoutBaseUrl}${separator}${params.toString()}`;
-      });
+        const params = new URLSearchParams({ email, phone: telefone });
+        const sep = LINK_CHECKOUT.includes('?') ? '&' : '?';
+        window.location.href = `${LINK_CHECKOUT}${sep}${params.toString()}`;
+      } catch (err) {
+        statusEl.textContent = 'Não conseguimos salvar agora. Tente novamente.';
+      } finally {
+        submitBtn.disabled = false;
+      }
     });
-  </script>
+  });
+</script>
 <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/vce701823e78c4301a35b7e07294d87301792088814092" integrity="sha512-UKNk8GbxkABxKcXYuLkO16EleLGUkcvJWtpSNmExE0Too3ZaFAxTscNWEc1OdAv5/BikHawapSCaiD2XCmp+Bw==" data-cf-beacon='{"version":"2024.11.0","token":"7004b19d732d43b298810595cc4050b1","r":1,"spa":2}' crossorigin="anonymous"></script>
 </body>
 </html>
