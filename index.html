@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Nuvvo: saiba quanto sobra no seu negócio</title>
-  <meta name="description" content="Anote entradas e despesas em segundos e saiba quanto sobrou no fim do dia. Para manicures, motoristas de app, confeiteiras, cabeleireiras e autônomos. R$ 14,99 por mês, 7 dias de garantia.">
+  <meta name="description" content="Anote entradas e despesas em segundos e saiba quanto sobrou no fim do dia. Para manicures, motoristas de app, confeiteiras, cabeleireiras e autônomos. Plano anual em 12x de R$ 10,99 ou R$ 14,99 por mês, com 7 dias de garantia.">
   <meta property="og:title" content="Nuvvo: saiba quanto sobra no seu negócio">
-  <meta property="og:description" content="Anote entradas e despesas em segundos e saiba quanto sobrou no fim do dia. R$ 14,99 por mês.">
+  <meta property="og:description" content="Anote entradas e despesas em segundos e saiba quanto sobrou no fim do dia. A partir de 12x de R$ 10,99.">
   <meta property="og:type" content="website">
   <meta name="theme-color" content="#0A6B3B">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -235,6 +235,35 @@
     .oferta-caixa .btn { width: 100%; max-width: 440px; }
     .oferta-caixa .formas { margin-top: 18px; font-size: 15px; color: var(--tinta-suave); }
 
+    /* Botões de plano no topo */
+    .hero-planos { display: flex; flex-wrap: wrap; gap: 14px; }
+    .hero-planos .btn { font-size: 18px; padding: 18px 22px; }
+    .btn.btn-anual { background: #FFFFFF; color: var(--tinta); box-shadow: 0 6px 0 #BFD9C9, 0 18px 30px -12px rgba(0,0,0,.35); }
+    .btn.btn-anual:hover { box-shadow: 0 8px 0 #BFD9C9, 0 22px 34px -12px rgba(0,0,0,.35); }
+    .btn.btn-anual:active { box-shadow: 0 2px 0 #BFD9C9; }
+
+    /* Planos (anual em destaque + mensal) */
+    .oferta-caixa { max-width: 900px; }
+    .planos { display: grid; grid-template-columns: 1.15fr .85fr; gap: 18px; margin-top: 30px; align-items: stretch; }
+    .plano { position: relative; border: 2px solid var(--linha); border-radius: 22px; padding: 30px 22px 24px; display: flex; flex-direction: column; align-items: center; }
+    .plano h3 { font-size: 22px; font-weight: 850; font-stretch: 110%; }
+    .plano .preco-grande { margin: 12px 0 4px; }
+    .plano .preco-grande strong { font-size: clamp(44px, 5.6vw, 64px); }
+    .plano .preco-grande span { font-size: 18px; }
+    .plano .preco-grande { white-space: nowrap; flex-wrap: nowrap; }
+    .plano:not(.destaque) .preco-grande strong { font-size: clamp(36px, 4.2vw, 46px); }
+    .plano .de-por { font-size: 15px; color: var(--tinta-suave); font-weight: 600; }
+    .plano .economia { margin: 12px 0 0; font-size: 15px; font-weight: 800; color: var(--verde); background: rgba(29,185,84,.12); border-radius: 999px; padding: 6px 14px; }
+    .plano .btn { margin-top: auto; width: 100%; }
+    .plano .de-por + .btn, .plano .economia + .btn { margin-top: 20px; }
+    .plano.destaque { border: 3px solid var(--amarelo-escuro); background: #FFFBEA; box-shadow: 0 18px 40px -24px rgba(242,194,0,.9); padding-top: 38px; }
+    .selo-plano { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); white-space: nowrap; background: var(--tinta); color: var(--amarelo); font-size: 13px; font-weight: 800; letter-spacing: .04em; padding: 7px 14px; border-radius: 999px; }
+    .btn.btn-sec { background: #FFFFFF; color: var(--tinta); border: 2px solid var(--tinta); box-shadow: 0 4px 0 var(--tinta); font-size: 18px; }
+    .btn.btn-sec:hover { box-shadow: 0 6px 0 var(--tinta); }
+    .plano { min-width: 0; }
+    @media (max-width: 760px) { .planos { grid-template-columns: 1fr; gap: 26px; } }
+    @media (max-width: 520px) { .plano { padding-left: 16px; padding-right: 16px; } .plano.destaque .preco-grande strong { font-size: 40px; } .plano .preco-grande span { font-size: 16px; } .selo-plano { font-size: 12px; } }
+
     .garantia {
       max-width: 760px; margin: 40px auto 0; display: flex; align-items: center; gap: 24px;
       border: 2px dashed rgba(255,255,255,.45); border-radius: 22px; padding: 26px 30px;
@@ -337,7 +366,10 @@
       <span class="alerta">Para manicures, motoristas de app, confeiteiras e autônomos</span>
       <h1>Você trabalha o mês inteiro. <span class="marca-texto">Quanto sobrou?</span></h1>
       <p class="sub">Se você não sabe responder na hora, seu dinheiro está escapando. O Nuvvo anota cada entrada e cada gasto em <b>5 segundos</b> e mostra, no fim do dia, <b>quanto ficou no seu bolso</b>.</p>
-      <a class="btn js-assinar" href="#oferta">Quero saber quanto sobra<small>R$ 14,99/mês. Cancele quando quiser.</small></a>
+      <div class="hero-planos">
+        <a class="btn js-assinar" data-plano="mensal" href="#">Assinar por R$ 14,99/mês<small>Cancele quando quiser</small></a>
+        <a class="btn btn-anual js-assinar" data-plano="anual" href="#">Anual: 12x de R$ 10,99<small>27% mais barato · economize R$ 48</small></a>
+      </div>
       <div class="selos"><span>7 dias de garantia</span><span>Pagamento seguro no cartão</span><span>Funciona no celular</span></div>
     </div>
 
@@ -351,7 +383,7 @@
       <div class="etiqueta e2">Lançado em<b>5 segundos</b></div>
     </div>
     <div class="cta-celular">
-      <a class="btn btn-pulso js-assinar" href="#oferta">Parar de perder dinheiro agora<small>Acesso na hora, por R$ 14,99/mês</small></a>
+      <a class="btn btn-pulso" href="#oferta">Parar de perder dinheiro agora<small>Acesso na hora, a partir de 12x de R$ 10,99</small></a>
       <p>Garantia de 7 dias: não gostou, devolvemos 100%.</p>
     </div>
     </div>
@@ -429,16 +461,31 @@
         <li><h3>O saldo atualiza na hora</h3><p>Você sabe quanto já entrou e quanto saiu no dia, sem fazer conta.</p></li>
         <li><h3>Feche o caixa à noite</h3><p>O Nuvvo mostra o resultado do dia e o que mais pesou no seu mês.</p></li>
       </ol>
-      <div class="cta-meio"><a class="btn js-assinar" href="#oferta">Começar agora<small>R$ 14,99/mês</small></a></div>
+      <div class="cta-meio"><a class="btn" href="#oferta">Começar agora<small>Ver os planos</small></a></div>
     </div>
   </section>
 
   <section class="oferta" id="oferta">
     <div class="container">
       <div class="oferta-caixa">
-        <h2>Tudo liberado por um preço só</h2>
-        <div class="preco-grande"><strong class="num">R$ 14,99</strong><span>/mês</span></div>
-        <p class="por-dia">Menos de <mark>50 centavos por dia</mark>.</p>
+        <h2>Escolha seu plano</h2>
+        <p class="por-dia">Tudo liberado nos dois. No anual, sai por <mark>36 centavos por dia</mark>.</p>
+        <div class="planos">
+          <div class="plano destaque">
+            <span class="selo-plano">MELHOR PREÇO · 27% OFF</span>
+            <h3>Anual</h3>
+            <div class="preco-grande"><span>12x de</span><strong class="num">R$ 10,99</strong></div>
+            <p class="de-por">ou R$ 131,88 à vista · <s>R$ 179,88</s> no mensal</p>
+            <p class="economia">Você economiza R$ 48, cerca de 3 meses grátis</p>
+            <a class="btn js-assinar" data-plano="anual" href="#">Quero o plano anual<small>Acesso liberado logo após o pagamento</small></a>
+          </div>
+          <div class="plano">
+            <h3>Mensal</h3>
+            <div class="preco-grande"><strong class="num">R$ 14,99</strong><span>/mês</span></div>
+            <p class="de-por">Cancele quando quiser</p>
+            <a class="btn btn-sec js-assinar" data-plano="mensal" href="#">Assinar o mensal<small>Acesso liberado logo após o pagamento</small></a>
+          </div>
+        </div>
         <ul>
           <li>Entradas e despesas sem limite</li>
           <li>Saldo do dia atualizado a cada lançamento</li>
@@ -446,14 +493,13 @@
           <li>Fechamento de caixa diário</li>
           <li>Resumo do mês por categoria</li>
         </ul>
-        <a class="btn js-assinar" href="#">Assinar agora<small>Acesso liberado logo após o pagamento</small></a>
-        <p class="formas">Pagamento no cartão de crédito. Sem fidelidade, sem taxa de adesão.</p>
+        <p class="formas">Pagamento no cartão de crédito. Sem taxa de adesão.</p>
       </div>
 
       <div class="garantia">
         <div class="selo"><span>7<small>DIAS</small></span></div>
         <div>
-          <h3>Garantia de 7 dias</h3>
+          <h3>Garantia de 7 dias nos dois planos</h3>
           <p>Use o Nuvvo por 7 dias. Se não gostar, peça o reembolso e devolvemos 100% do valor. Sem pergunta, sem burocracia.</p>
         </div>
       </div>
@@ -478,7 +524,7 @@
     <div class="container">
       <h2>Amanhã você vai trabalhar de novo. Vai saber quanto sobrou?</h2>
       <p>Comece hoje. Em 5 segundos você faz o primeiro lançamento.</p>
-      <a class="btn js-assinar" href="#">Quero saber quanto sobra<small>R$ 14,99/mês. 7 dias de garantia.</small></a>
+      <a class="btn" href="#oferta">Quero saber quanto sobra<small>A partir de 12x de R$ 10,99. 7 dias de garantia.</small></a>
     </div>
   </section>
 </main>
@@ -496,17 +542,21 @@
 </footer>
 
 <div class="barra-fixa" id="barra-fixa" aria-hidden="true">
-  <div class="info"><b class="num">R$ 14,99/mês</b>7 dias de garantia</div>
-  <a class="btn js-assinar" href="#" tabindex="-1">Assinar</a>
+  <div class="info"><b class="num">12x de R$ 10,99</b>no plano anual · 7 dias de garantia</div>
+  <a class="btn" href="#oferta" tabindex="-1">Ver planos</a>
 </div>
 
 <script>
-  // Checkout da HeroSpark (repassa UTMs da URL, se houver)
-  const CHECKOUT_URL = 'https://pay.herospark.com/nuvvo-o-controle-financeiro-que-seu-negocio-precisa-553275';
+  // Checkouts da HeroSpark (repassam as UTMs da URL, se houver)
+  const CHECKOUTS = {
+    anual: 'https://pay.herospark.com/nuvvo-o-controle-financeiro-que-seu-negocio-precisa-553871',
+    mensal: 'https://pay.herospark.com/nuvvo-o-controle-financeiro-que-seu-negocio-precisa-553275'
+  };
   document.querySelectorAll('.js-assinar').forEach((btn) => {
     btn.addEventListener('click', (e) => {
       e.preventDefault();
-      window.location.href = CHECKOUT_URL + window.location.search;
+      const url = CHECKOUTS[btn.dataset.plano] || CHECKOUTS.anual;
+      window.location.href = url + window.location.search;
     });
   });
 
