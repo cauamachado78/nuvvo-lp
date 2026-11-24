@@ -345,6 +345,26 @@
       .btn-pulso, .btn-pulso::after { animation: none; }
       .btn, .barra-fixa { transition: none; }
     }
+
+    /* Popup de cadastro antes do checkout */
+    .cad-fundo { position: fixed; inset: 0; z-index: 1000; background: rgba(6,24,15,.72); display: none; align-items: center; justify-content: center; padding: 16px; }
+    .cad-fundo.aberto { display: flex; }
+    .cad { position: relative; width: 100%; max-width: 440px; background: #FFFFFF; color: var(--tinta); border-radius: 20px; padding: 28px 24px 22px; box-shadow: 0 30px 60px -20px rgba(0,0,0,.5); animation: cad-entra .18s ease-out; }
+    @keyframes cad-entra { from { transform: translateY(16px); opacity: 0; } to { transform: none; opacity: 1; } }
+    .cad-fechar { position: absolute; top: 10px; right: 10px; width: 40px; height: 40px; border: 0; background: transparent; font-size: 26px; line-height: 1; color: var(--tinta-suave); cursor: pointer; border-radius: 10px; }
+    .cad-plano { display: inline-block; background: var(--nevoa); color: var(--verde); font-size: 14px; font-weight: 800; padding: 5px 10px; border-radius: 999px; margin-bottom: 12px; }
+    .cad h3 { font-size: 26px; font-weight: 850; font-stretch: 110%; letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 6px; padding-right: 30px; }
+    .cad p.cad-sub { font-size: 16px; color: var(--tinta-suave); margin-bottom: 18px; }
+    .cad label { display: block; font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+    .cad input { width: 100%; font-family: var(--fonte); font-size: 18px; padding: 14px 14px; border: 2px solid var(--linha); border-radius: 12px; background: #FFFFFF; color: var(--tinta); margin-bottom: 14px; }
+    .cad input:focus { outline: none; border-color: var(--verde); }
+    .cad input.erro { border-color: var(--vermelho); }
+    .cad-msg { min-height: 20px; font-size: 14px; font-weight: 600; color: var(--vermelho); margin: -6px 0 8px; }
+    .cad .btn { width: 100%; font-size: 19px; padding: 18px 20px; }
+    .cad .btn[disabled] { opacity: .7; cursor: wait; }
+    .cad-priv { font-size: 13px; color: var(--tinta-suave); text-align: center; margin-top: 14px; }
+    .cad-priv a { color: var(--tinta-suave); }
+    body.cad-travado { overflow: hidden; }
   </style>
   <!-- Utmify: pixel (Meta) -->
   <script>window.pixelId = "6afd2362afe9bad9ba7918a4";</script>
@@ -541,6 +561,24 @@
   </div>
 </footer>
 
+<div class="cad-fundo" id="cad-fundo" aria-hidden="true">
+  <div class="cad" role="dialog" aria-modal="true" aria-labelledby="cad-titulo">
+    <button type="button" class="cad-fechar" id="cad-fechar" aria-label="Fechar">×</button>
+    <span class="cad-plano" id="cad-plano">Plano anual · 12x de R$ 10,99</span>
+    <h3 id="cad-titulo">Falta só um passo</h3>
+    <p class="cad-sub">Deixe seu e-mail e WhatsApp. Use o mesmo e-mail no pagamento: é por ele que liberamos seu acesso.</p>
+    <form id="cad-form" novalidate>
+      <label for="cad-email">Seu melhor e-mail</label>
+      <input id="cad-email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="voce@email.com" required>
+      <label for="cad-tel">WhatsApp</label>
+      <input id="cad-tel" name="telefone" type="tel" inputmode="tel" autocomplete="tel" placeholder="(00) 00000-0000" required>
+      <div class="cad-msg" id="cad-msg" role="alert"></div>
+      <button type="submit" class="btn" id="cad-enviar">Ir para o pagamento →</button>
+    </form>
+    <p class="cad-priv">Seus dados ficam só com a Nuvvo. <a href="/privacidade.html" target="_blank" rel="noopener">Política de privacidade</a></p>
+  </div>
+</div>
+
 <div class="barra-fixa" id="barra-fixa" aria-hidden="true">
   <div class="info"><b class="num">12x de R$ 10,99</b>no plano anual · 7 dias de garantia</div>
   <a class="btn" href="#oferta" tabindex="-1">Ver planos</a>
@@ -552,12 +590,104 @@
     anual: 'https://pay.herospark.com/nuvvo-o-controle-financeiro-que-seu-negocio-precisa-553871',
     mensal: 'https://pay.herospark.com/nuvvo-o-controle-financeiro-que-seu-negocio-precisa-553275'
   };
+  // Cadastro (e-mail + WhatsApp) antes do checkout. Salva na tabela lp_leads do Supabase.
+  // A chave abaixo é a "publishable": pode ficar no site, porque a tabela só aceita INSERIR (RLS).
+  const SUPABASE_URL = 'https://flumfzlqtjxsvwhzecdc.supabase.co';
+  const SUPABASE_KEY = 'sb_publishable_6skOU7S--TL9JhAb9j8rUQ_PLi-lRXE';
+  const PLANOS = { anual: 'Plano anual · 12x de R$ 10,99', mensal: 'Plano mensal · R$ 14,99/mês' };
+
+  const cadFundo = document.getElementById('cad-fundo');
+  const cadForm = document.getElementById('cad-form');
+  const cadEmail = document.getElementById('cad-email');
+  const cadTel = document.getElementById('cad-tel');
+  const cadMsg = document.getElementById('cad-msg');
+  const cadEnviar = document.getElementById('cad-enviar');
+  let planoEscolhido = 'anual';
+  let ultimoFoco = null;
+
+  function irProCheckout() {
+    const url = CHECKOUTS[planoEscolhido] || CHECKOUTS.anual;
+    window.location.href = url + window.location.search;
+  }
+
+  function abrirCadastro(plano) {
+    planoEscolhido = CHECKOUTS[plano] ? plano : 'anual';
+    document.getElementById('cad-plano').textContent = PLANOS[planoEscolhido];
+    try {
+      const salvo = JSON.parse(localStorage.getItem('nuvvo_cad') || '{}');
+      if (salvo.email && !cadEmail.value) cadEmail.value = salvo.email;
+      if (salvo.telefone && !cadTel.value) cadTel.value = salvo.telefone;
+    } catch (_) {}
+    cadMsg.textContent = '';
+    cadEnviar.disabled = false;
+    cadEnviar.textContent = 'Ir para o pagamento →';
+    ultimoFoco = document.activeElement;
+    cadFundo.classList.add('aberto');
+    cadFundo.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('cad-travado');
+    setTimeout(() => (cadEmail.value ? cadTel : cadEmail).focus(), 60);
+  }
+
+  function fecharCadastro() {
+    cadFundo.classList.remove('aberto');
+    cadFundo.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('cad-travado');
+    if (ultimoFoco && ultimoFoco.focus) ultimoFoco.focus();
+  }
+
   document.querySelectorAll('.js-assinar').forEach((btn) => {
     btn.addEventListener('click', (e) => {
       e.preventDefault();
-      const url = CHECKOUTS[btn.dataset.plano] || CHECKOUTS.anual;
-      window.location.href = url + window.location.search;
+      abrirCadastro(btn.dataset.plano);
     });
+  });
+  document.getElementById('cad-fechar').addEventListener('click', fecharCadastro);
+  cadFundo.addEventListener('click', (e) => { if (e.target === cadFundo) fecharCadastro(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && cadFundo.classList.contains('aberto')) fecharCadastro(); });
+
+  // Máscara do WhatsApp: (00) 00000-0000
+  cadTel.addEventListener('input', () => {
+    const d = cadTel.value.replace(/\D/g, '').slice(0, 11);
+    let v = d;
+    if (d.length > 2) v = '(' + d.slice(0, 2) + ') ' + d.slice(2);
+    if (d.length > 6) {
+      const meio = d.length === 11 ? 7 : 6;
+      v = '(' + d.slice(0, 2) + ') ' + d.slice(2, meio) + '-' + d.slice(meio);
+    }
+    cadTel.value = v;
+    cadTel.classList.remove('erro');
+  });
+  cadEmail.addEventListener('input', () => cadEmail.classList.remove('erro'));
+
+  cadForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const email = cadEmail.value.trim().toLowerCase();
+    const telefone = cadTel.value.trim();
+    const digitos = telefone.replace(/\D/g, '');
+    cadEmail.classList.toggle('erro', !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email));
+    cadTel.classList.toggle('erro', digitos.length < 10 || digitos.length > 11);
+    if (cadEmail.classList.contains('erro')) { cadMsg.textContent = 'Confira o e-mail.'; cadEmail.focus(); return; }
+    if (cadTel.classList.contains('erro')) { cadMsg.textContent = 'Confira o WhatsApp com DDD.'; cadTel.focus(); return; }
+    cadMsg.textContent = '';
+    cadEnviar.disabled = true;
+    cadEnviar.textContent = 'Indo pro pagamento…';
+    try { localStorage.setItem('nuvvo_cad', JSON.stringify({ email, telefone })); } catch (_) {}
+
+    const q = new URLSearchParams(window.location.search);
+    const corta = (v) => (v ? String(v).slice(0, 300) : null);
+    const lead = {
+      email, telefone, plano: planoEscolhido,
+      utm_source: corta(q.get('utm_source')), utm_campaign: corta(q.get('utm_campaign')),
+      utm_medium: corta(q.get('utm_medium')), utm_content: corta(q.get('utm_content')),
+      utm_term: corta(q.get('utm_term')),
+    };
+    // Grava e segue pro checkout; se o Supabase demorar, não segura o cliente (máx. 1,5 s)
+    const gravar = fetch(SUPABASE_URL + '/rest/v1/lp_leads', {
+      method: 'POST', keepalive: true,
+      headers: { apikey: SUPABASE_KEY, 'Content-Type': 'application/json', Prefer: 'return=minimal' },
+      body: JSON.stringify(lead),
+    }).catch(() => {});
+    Promise.race([gravar, new Promise((r) => setTimeout(r, 1500))]).then(irProCheckout);
   });
 
 
