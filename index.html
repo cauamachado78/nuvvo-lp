@@ -238,6 +238,12 @@
     /* Botões de plano no topo */
     .hero-planos { display: flex; flex-wrap: wrap; gap: 14px; }
     .hero-planos .btn { font-size: 18px; padding: 18px 22px; }
+    .hero-planos .ou-assine { flex-basis: 100%; font-size: 15px; color: rgba(255,255,255,.85); margin: 0; }
+    .hero-planos .ou-assine a { color: inherit; font-weight: 700; }
+    .teste-caixa { text-align: center; background: var(--nevoa); border: 2px solid var(--verde); border-radius: 18px; padding: 22px 18px; margin: 0 0 22px; }
+    .teste-caixa h3 { font-size: 24px; margin-bottom: 4px; }
+    .teste-caixa p { color: var(--tinta-suave); margin-bottom: 14px; }
+    .ou-assine-ja { text-align: center; font-weight: 800; margin: 4px 0 12px; color: var(--tinta-suave); }
     .btn.btn-anual { background: #FFFFFF; color: var(--tinta); box-shadow: 0 6px 0 #BFD9C9, 0 18px 30px -12px rgba(0,0,0,.35); }
     .btn.btn-anual:hover { box-shadow: 0 8px 0 #BFD9C9, 0 22px 34px -12px rgba(0,0,0,.35); }
     .btn.btn-anual:active { box-shadow: 0 2px 0 #BFD9C9; }
@@ -387,10 +393,10 @@
       <h1>Você trabalha o mês inteiro. <span class="marca-texto">Quanto sobrou?</span></h1>
       <p class="sub">Se você não sabe responder na hora, seu dinheiro está escapando. O Nuvvo anota cada entrada e cada gasto em <b>5 segundos</b> e mostra, no fim do dia, <b>quanto ficou no seu bolso</b>.</p>
       <div class="hero-planos">
-        <a class="btn js-assinar" data-plano="mensal" href="#">Assinar por R$ 14,99/mês<small>Cancele quando quiser</small></a>
-        <a class="btn btn-anual js-assinar" data-plano="anual" href="#">Anual: 12x de R$ 10,99<small>27% mais barato · economize R$ 48</small></a>
+        <a class="btn btn-pulso js-assinar" data-plano="teste" href="#">Testar 7 dias grátis<small>Sem cartão · você entra na hora</small></a>
+        <p class="ou-assine">Depois, R$ 14,99/mês ou 12x de R$ 10,99. <a href="#oferta">Ver planos</a></p>
       </div>
-      <div class="selos"><span>7 dias de garantia</span><span>Pagamento seguro no cartão</span><span>Funciona no celular</span></div>
+      <div class="selos"><span>7 dias grátis</span><span>Sem cartão no teste</span><span>Funciona no celular</span></div>
     </div>
 
     <div class="coluna-celular">
@@ -403,7 +409,7 @@
       <div class="etiqueta e2">Lançado em<b>5 segundos</b></div>
     </div>
     <div class="cta-celular">
-      <a class="btn btn-pulso" href="#oferta">Parar de perder dinheiro agora<small>Acesso na hora, a partir de 12x de R$ 10,99</small></a>
+      <a class="btn btn-pulso js-assinar" data-plano="teste" href="#">Testar 7 dias grátis<small>Sem cartão · você entra na hora</small></a>
       <p>Garantia de 7 dias: não gostou, devolvemos 100%.</p>
     </div>
     </div>
@@ -481,13 +487,19 @@
         <li><h3>O saldo atualiza na hora</h3><p>Você sabe quanto já entrou e quanto saiu no dia, sem fazer conta.</p></li>
         <li><h3>Feche o caixa à noite</h3><p>O Nuvvo mostra o resultado do dia e o que mais pesou no seu mês.</p></li>
       </ol>
-      <div class="cta-meio"><a class="btn" href="#oferta">Começar agora<small>Ver os planos</small></a></div>
+      <div class="cta-meio"><a class="btn js-assinar" data-plano="teste" href="#">Começar grátis agora<small>7 dias sem pagar nada</small></a></div>
     </div>
   </section>
 
   <section class="oferta" id="oferta">
     <div class="container">
       <div class="oferta-caixa">
+        <div class="teste-caixa">
+          <h3>Comece com 7 dias grátis</h3>
+          <p>Use o app completo por uma semana. Sem cartão e sem compromisso: se gostar, escolhe o plano depois.</p>
+          <a class="btn js-assinar" data-plano="teste" href="#">Testar 7 dias grátis<small>Você entra no app na hora</small></a>
+        </div>
+        <p class="ou-assine-ja">Ou já garanta seu plano</p>
         <h2>Escolha seu plano</h2>
         <p class="por-dia">Tudo liberado nos dois. No anual, sai por <mark>36 centavos por dia</mark>.</p>
         <div class="planos">
@@ -530,6 +542,7 @@
     <div class="container">
       <h2>Perguntas frequentes</h2>
       <div class="faq-lista">
+        <details><summary>Como funciona o teste grátis?</summary><p>Você coloca seu e-mail e WhatsApp, cria uma senha e já usa o app completo por 7 dias, sem cartão. No fim do teste, se quiser continuar, escolhe o plano mensal ou anual. Seus lançamentos ficam salvos.</p></details>
         <details><summary>Preciso entender de contabilidade?</summary><p>Não. Você só anota o que entrou e o que saiu. O Nuvvo faz as contas e mostra quanto sobrou.</p></details>
         <details><summary>Como recebo o acesso depois de pagar?</summary><p>Logo depois do pagamento, você toca em "Criar meu acesso", digita o mesmo e-mail da compra e recebe um código de 6 dígitos para criar sua senha. Leva menos de um minuto.</p></details>
         <details><summary>Quais formas de pagamento posso usar?</summary><p>Cartão de crédito. A cobrança é mensal e automática no cartão, você não precisa lembrar de pagar. A cobrança mensal não ocupa o limite do cartão de uma vez, só o valor de cada mês.</p></details>
@@ -544,7 +557,7 @@
     <div class="container">
       <h2>Amanhã você vai trabalhar de novo. Vai saber quanto sobrou?</h2>
       <p>Comece hoje. Em 5 segundos você faz o primeiro lançamento.</p>
-      <a class="btn" href="#oferta">Quero saber quanto sobra<small>A partir de 12x de R$ 10,99. 7 dias de garantia.</small></a>
+      <a class="btn js-assinar" data-plano="teste" href="#">Quero saber quanto sobra<small>7 dias grátis, sem cartão</small></a>
     </div>
   </section>
 </main>
@@ -581,7 +594,7 @@
 
 <div class="barra-fixa" id="barra-fixa" aria-hidden="true">
   <div class="info"><b class="num">12x de R$ 10,99</b>no plano anual · 7 dias de garantia</div>
-  <a class="btn" href="#oferta" tabindex="-1">Ver planos</a>
+  <a class="btn js-assinar" data-plano="teste" href="#" tabindex="-1">Testar grátis</a>
 </div>
 
 <script>
@@ -594,7 +607,14 @@
   // A chave abaixo é a "publishable": pode ficar no site, porque a tabela só aceita INSERIR (RLS).
   const SUPABASE_URL = 'https://flumfzlqtjxsvwhzecdc.supabase.co';
   const SUPABASE_KEY = 'sb_publishable_6skOU7S--TL9JhAb9j8rUQ_PLi-lRXE';
-  const PLANOS = { anual: 'Plano anual · 12x de R$ 10,99', mensal: 'Plano mensal · R$ 14,99/mês' };
+  const PLANOS = { anual: 'Plano anual · 12x de R$ 10,99', mensal: 'Plano mensal · R$ 14,99/mês', teste: '7 dias grátis · sem cartão' };
+  // Teste grátis: cria o acesso na função iniciar-teste e manda pra tela de criar senha do app
+  const URL_INICIAR_TESTE = SUPABASE_URL + '/functions/v1/iniciar-teste';
+  const URL_CRIAR_SENHA = 'https://app.appnuvvo.com.br/criar-senha.html';
+  const TEXTOS = {
+    teste: { titulo: 'Comece seus 7 dias grátis', sub: 'Deixe seu e-mail e WhatsApp. Você cria uma senha e já entra no app, sem cartão.', botao: 'Começar meu teste grátis →' },
+    compra: { titulo: 'Falta só um passo', sub: 'Deixe seu e-mail e WhatsApp. Use o mesmo e-mail no pagamento: é por ele que liberamos seu acesso.', botao: 'Ir para o pagamento →' },
+  };
 
   const cadFundo = document.getElementById('cad-fundo');
   const cadForm = document.getElementById('cad-form');
@@ -611,8 +631,11 @@
   }
 
   function abrirCadastro(plano) {
-    planoEscolhido = CHECKOUTS[plano] ? plano : 'anual';
+    planoEscolhido = PLANOS[plano] ? plano : 'anual';
     document.getElementById('cad-plano').textContent = PLANOS[planoEscolhido];
+    const tx = planoEscolhido === 'teste' ? TEXTOS.teste : TEXTOS.compra;
+    document.getElementById('cad-titulo').textContent = tx.titulo;
+    document.querySelector('#cad-fundo .cad-sub').textContent = tx.sub;
     try {
       const salvo = JSON.parse(localStorage.getItem('nuvvo_cad') || '{}');
       if (salvo.email && !cadEmail.value) cadEmail.value = salvo.email;
@@ -620,7 +643,8 @@
     } catch (_) {}
     cadMsg.textContent = '';
     cadEnviar.disabled = false;
-    cadEnviar.textContent = 'Ir para o pagamento →';
+    cadEnviar.textContent = tx.botao;
+    cadEnviar.dataset.acao = '';
     ultimoFoco = document.activeElement;
     cadFundo.classList.add('aberto');
     cadFundo.setAttribute('aria-hidden', 'false');
@@ -661,6 +685,12 @@
 
   cadForm.addEventListener('submit', (e) => {
     e.preventDefault();
+    // Depois de "teste já usado", o botão vira "Ver planos"
+    if (cadEnviar.dataset.acao === 'planos') {
+      fecharCadastro();
+      document.getElementById('oferta').scrollIntoView({ behavior: 'smooth' });
+      return;
+    }
     const email = cadEmail.value.trim().toLowerCase();
     const telefone = cadTel.value.trim();
     const digitos = telefone.replace(/\D/g, '');
@@ -670,7 +700,7 @@
     if (cadTel.classList.contains('erro')) { cadMsg.textContent = 'Confira o WhatsApp com DDD.'; cadTel.focus(); return; }
     cadMsg.textContent = '';
     cadEnviar.disabled = true;
-    cadEnviar.textContent = 'Indo pro pagamento…';
+    cadEnviar.textContent = planoEscolhido === 'teste' ? 'Liberando seu teste…' : 'Indo pro pagamento…';
     try { localStorage.setItem('nuvvo_cad', JSON.stringify({ email, telefone })); } catch (_) {}
 
     const q = new URLSearchParams(window.location.search);
@@ -681,6 +711,8 @@
       utm_medium: corta(q.get('utm_medium')), utm_content: corta(q.get('utm_content')),
       utm_term: corta(q.get('utm_term')),
     };
+
+    if (planoEscolhido === 'teste') { iniciarTeste(lead); return; }
     // Grava e segue pro checkout; se o Supabase demorar, não segura o cliente (máx. 1,5 s)
     const gravar = fetch(SUPABASE_URL + '/rest/v1/lp_leads', {
       method: 'POST', keepalive: true,
@@ -689,6 +721,46 @@
     }).catch(() => {});
     Promise.race([gravar, new Promise((r) => setTimeout(r, 1500))]).then(irProCheckout);
   });
+
+  async function iniciarTeste(lead) {
+    const falhou = (texto) => {
+      cadMsg.textContent = texto;
+      cadEnviar.disabled = false;
+      cadEnviar.textContent = TEXTOS.teste.botao;
+    };
+    let r;
+    try {
+      const resp = await fetch(URL_INICIAR_TESTE, {
+        method: 'POST',
+        headers: { apikey: SUPABASE_KEY, 'Content-Type': 'application/json' },
+        body: JSON.stringify(lead),
+      });
+      r = await resp.json().catch(() => ({}));
+      if (!resp.ok && !r.erro) r.erro = 'http';
+    } catch (_) {
+      return falhou('Sem conexão agora. Confira a internet e tente de novo.');
+    }
+    if (!r || !r.ok) {
+      if (r && r.erro === 'email') return falhou('Confira o e-mail.');
+      if (r && r.erro === 'telefone') return falhou('Confira o WhatsApp com DDD.');
+      return falhou('Não deu certo agora. Tente de novo em instantes.');
+    }
+    if (r.situacao === 'teste_usado') {
+      cadMsg.textContent = 'Esse e-mail já usou o teste grátis. Pra continuar, escolha um plano.';
+      cadEnviar.disabled = false;
+      cadEnviar.textContent = 'Ver planos →';
+      cadEnviar.dataset.acao = 'planos';
+      return;
+    }
+    // Avisa a Meta que começou um teste (evento padrão "StartTrial"), só quando o teste é novo
+    if (r.situacao === 'teste_criado') {
+      try { if (typeof fbq === 'function') fbq('track', 'StartTrial', { value: 0, currency: 'BRL' }); } catch (_) {}
+    }
+    const marca = r.situacao === 'cliente' ? '' : 'teste&';
+    setTimeout(() => {
+      window.location.href = URL_CRIAR_SENHA + '#' + marca + 'email=' + encodeURIComponent(lead.email);
+    }, 600);
+  }
 
 
   // Garante que o vídeo do app rode sozinho, sem precisar dar play
